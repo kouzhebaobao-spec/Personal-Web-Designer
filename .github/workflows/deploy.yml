@@ -16,8 +16,5 @@ jobs:
         run: npm install -g @cloudbase/cli@latest
 
       - name: 部署到静态网站托管
-        env:
-          CLOUDBASE_SECRET_ID: ${{ secrets.SECRET_ID }}
-          CLOUDBASE_SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
-          cloudbase hosting deploy . / -e ${{ secrets.ENV_ID }}
+          cloudbase hosting deploy . / -e ${{ secrets.ENV_ID }} --secretId ${{ secrets.SECRET_ID }} --secretKey ${{ secrets.SECRET_KEY }}
