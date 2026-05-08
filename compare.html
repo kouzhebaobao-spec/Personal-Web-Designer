@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人主页定制 · 套餐对比</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'PingFang SC','Microsoft YaHei',sans-serif;
+  background: #0d0d14;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 80px 20px 60px;
+  background: radial-gradient(ellipse at top, rgba(124,106,255,0.15) 0%, transparent 60%);
+}
+.header .badge {
+  display: inline-block;
+  background: rgba(124,106,255,0.15);
+  border: 1px solid rgba(124,106,255,0.3);
+  color: #a78bfa; padding: 6px 18px; border-radius: 50px;
+  font-size: 13px; margin-bottom: 20px;
+}
+.header h1 { font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 12px; }
+.header h1 span {
+  background: linear-gradient(135deg, #7c6aff, #f472b6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.header p { color: #94a3b8; font-size: 16px; }
+
+.cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; max-width: 1100px; margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.card {
+  background: #1a1a28;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 24px; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover { transform: translateY(-8px); }
+.card.featured {
+  border-color: rgba(124,106,255,0.5);
+  box-shadow: 0 0 60px rgba(124,106,255,0.2);
+  position: relative;
+}
+.card.featured::before {
+  content: '⭐ 最受欢迎';
+  position: absolute; top: 0; right: 0;
+  background: linear-gradient(135deg, #7c6aff, #f472b6);
+  font-size: 11px; font-weight: 700; padding: 6px 14px;
+  border-radius: 0 24px 0 12px; color: white;
+}
+
+.card-preview {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  font-size: 48px; position: relative; overflow: hidden;
+  cursor: pointer;
+}
+.card-preview .preview-label {
+  position: absolute; bottom: 10px; right: 10px;
+  background: rgba(0,0,0,0.6); color: white;
+  font-size: 11px; padding: 4px 10px; border-radius: 50px;
+  backdrop-filter: blur(4px);
+}
+.card-preview .open-btn {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0); transition: background 0.2s;
+  font-size: 14px; font-weight: 600; color: white; opacity: 0;
+  transition: opacity 0.2s;
+}
+.card-preview:hover .open-btn { opacity: 1; background: rgba(0,0,0,0.4); }
+
+.card-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+.tier-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+.card-name { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+.card-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.5; }
+
+.price { margin-bottom: 24px; }
+.price .amount { font-size: 36px; font-weight: 900; }
+.price .unit { font-size: 14px; color: #64748b; }
+
+.features { list-style: none; flex: 1; margin-bottom: 28px; }
+.features li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 0; font-size: 14px; color: #94a3b8;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.features li:last-child { border: none; }
+.features li .check { flex-shrink: 0; font-size: 14px; }
+.features li.highlight { color: #e2e8f0; }
+
+.cta-btn {
+  display: block; text-align: center;
+  padding: 14px; border-radius: 12px;
+  font-weight: 700; font-size: 15px;
+  text-decoration: none; transition: all 0.2s;
+  cursor: pointer; border: none;
+}
+.btn-basic {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #e2e8f0;
+}
+.btn-basic:hover { background: rgba(255,255,255,0.1); }
+.btn-standard {
+  background: linear-gradient(135deg, #7c6aff, #a855f7);
+  color: white;
+  box-shadow: 0 4px 20px rgba(124,106,255,0.4);
+}
+.btn-standard:hover { box-shadow: 0 8px 30px rgba(124,106,255,0.6); transform: translateY(-1px); }
+.btn-premium {
+  background: linear-gradient(135deg, #f472b6, #fb923c);
+  color: white;
+  box-shadow: 0 4px 20px rgba(244,114,182,0.4);
+}
+.btn-premium:hover { box-shadow: 0 8px 30px rgba(244,114,182,0.6); transform: translateY(-1px); }
+
+.compare-table { max-width: 900px; margin: 0 auto 80px; padding: 0 24px; }
+.compare-table h2 { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 32px; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: center; padding: 14px; font-size: 14px; font-weight: 700; }
+th:first-child { text-align: left; }
+td { padding: 14px 16px; font-size: 14px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: center; }
+td:first-child { color: #e2e8f0; text-align: left; font-weight: 500; }
+tr:last-child td { border: none; }
+.check-yes { color: #4ade80; font-size: 18px; }
+.check-no { color: #374151; font-size: 18px; }
+.check-partial { color: #fbbf24; font-size: 14px; }
+
+@media(max-width: 768px) {
+  .cards { grid-template-columns: 1fr; }
+  .header h1 { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">✨ AI 驱动 · 专业定制</div>
+  <h1>个人主页 <span>三档套餐</span></h1>
+  <p>根据您的行业和需求选择最适合的方案</p>
+</div>
+
+<div class="cards">
+  <!-- 基础版 -->
+  <div class="card">
+    <div class="card-preview" style="background: linear-gradient(135deg,#f8f9fa,#e9ecef);" onclick="window.open('basic.html','_blank')">
+      <span>📄</span>
+      <div class="preview-label">点击预览</div>
+      <div class="open-btn">🔗 打开示例</div>
+    </div>
+    <div class="card-body">
+      <div class="tier-label" style="color:#94a3b8">基础版</div>
+      <div class="card-name">简约专业</div>
+      <div class="card-subtitle">清晰、正式、无装饰，适合金融、法律、会计等传统行业</div>
+      <div class="price">
+        <span class="amount" style="color:#e2e8f0">¥199</span>
+        <span class="unit"> / 个</span>
+      </div>
+      <ul class="features">
+        <li class="highlight"><span class="check">✅</span>完整个人信息展示</li>
+        <li class="highlight"><span class="check">✅</span>工作经历时间线</li>
+        <li class="highlight"><span class="check">✅</span>技能标签展示</li>
+        <li class="highlight"><span class="check">✅</span>教育背景</li>
+        <li class="highlight"><span class="check">✅</span>联系方式</li>
+        <li><span class="check">✅</span>移动端适配</li>
+        <li><span class="check">✅</span>1次免费修改</li>
+        <li><span class="check check-no">✗</span>动画效果</li>
+        <li><span class="check check-no">✗</span>在线部署</li>
+      </ul>
+      <button class="cta-btn btn-basic" onclick="window.open('basic.html','_blank')">查看示例 →</button>
+    </div>
+  </div>
+
+  <!-- 标准版 -->
+  <div class="card featured">
+    <div class="card-preview" style="background: linear-gradient(135deg,#1a1a3e,#2d1b69);" onclick="window.open('standard.html','_blank')">
+      <span>🚀</span>
+      <div class="preview-label">点击预览</div>
+      <div class="open-btn">🔗 打开示例</div>
+    </div>
+    <div class="card-body">
+      <div class="tier-label" style="color:#a78bfa">标准版</div>
+      <div class="card-name">现代活力</div>
+      <div class="card-subtitle">有设计感、有动态效果，适合产品、运营、市场等互联网岗位</div>
+      <div class="price">
+        <span class="amount" style="background:linear-gradient(135deg,#7c6aff,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">¥399</span>
+        <span class="unit"> / 个</span>
+      </div>
+      <ul class="features">
+        <li class="highlight"><span class="check">✅</span>基础版全部内容</li>
+        <li class="highlight"><span class="check">✅</span>渐变配色设计</li>
+        <li class="highlight"><span class="check">✅</span>技能进度条</li>
+        <li class="highlight"><span class="check">✅</span>项目成就展示</li>
+        <li class="highlight"><span class="check">✅</span>固定导航栏</li>
+        <li class="highlight"><span class="check">✅</span>Hover交互效果</li>
+        <li><span class="check">✅</span>2次免费修改</li>
+        <li><span class="check">✅</span>部署教程</li>
+        <li><span class="check check-no">✗</span>动态粒子背景</li>
+      </ul>
+      <button class="cta-btn btn-standard" onclick="window.open('standard.html','_blank')">查看示例 →</button>
+    </div>
+  </div>
+
+  <!-- 高级版 -->
+  <div class="card">
+    <div class="card-preview" style="background: linear-gradient(135deg,#0a0a0f,#1a0533);" onclick="window.open('premium.html','_blank')">
+      <span>✨</span>
+      <div class="preview-label">点击预览</div>
+      <div class="open-btn">🔗 打开示例</div>
+    </div>
+    <div class="card-body">
+      <div class="tier-label" style="color:#f472b6">高级版</div>
+      <div class="card-name">炫酷科技</div>
+      <div class="card-subtitle">粒子动画、打字机效果、滚动动画，适合设计师、开发者、创意人才</div>
+      <div class="price">
+        <span class="amount" style="background:linear-gradient(135deg,#f472b6,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">¥699</span>
+        <span class="unit"> / 个</span>
+      </div>
+      <ul class="features">
+        <li class="highlight"><span class="check">✅</span>标准版全部内容</li>
+        <li class="highlight"><span class="check">✅</span>粒子动态背景</li>
+        <li class="highlight"><span class="check">✅</span>打字机动效</li>
+        <li class="highlight"><span class="check">✅</span>滚动渐入动画</li>
+        <li class="highlight"><span class="check">✅</span>作品集展示</li>
+        <li class="highlight"><span class="check">✅</span>深色科技风主题</li>
+        <li class="highlight"><span class="check">✅</span>3次免费修改</li>
+        <li class="highlight"><span class="check">✅</span>帮助部署上线</li>
+      </ul>
+      <button class="cta-btn btn-premium" onclick="window.open('premium.html','_blank')">查看示例 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- 对比表 -->
+<div class="compare-table">
+  <h2>功能详细对比</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>功能特性</th>
+        <th style="color:#94a3b8">基础版<br><small>¥199</small></th>
+        <th style="color:#a78bfa">标准版<br><small>¥399</small></th>
+        <th style="color:#f472b6">高级版<br><small>¥699</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>个人信息展示</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>工作经历时间轴</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>技能展示</td><td>标签云</td><td>进度条</td><td>进度条+动画</td></tr>
+      <tr><td>项目展示</td><td><span class="check-no">✗</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>动画效果</td><td><span class="check-no">✗</span></td><td>基础Hover</td><td>全套动效</td></tr>
+      <tr><td>粒子/背景动效</td><td><span class="check-no">✗</span></td><td><span class="check-no">✗</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>打字机效果</td><td><span class="check-no">✗</span></td><td><span class="check-no">✗</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>移动端适配</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>免费修改次数</td><td>1次</td><td>2次</td><td>3次</td></div></td></tr>
+      <tr><td>部署教程/协助</td><td>教程</td><td>教程</td><td>帮助部署</td></tr>
+      <tr><td>交付时间</td><td>24小时</td><td>24小时</td><td>48小时</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

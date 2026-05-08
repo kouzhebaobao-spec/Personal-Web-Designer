@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈晓雨 · UI/UX Designer</title>
+<style>
+:root {
+  --bg:#0a0a0f;--bg2:#12121a;--card:#1a1a28;
+  --primary:#7c6aff;--primary2:#a78bfa;
+  --accent:#f472b6;--accent2:#38bdf8;
+  --text:#e2e8f0;--text-muted:#94a3b8;
+  --border:rgba(124,106,255,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 60px;height:64px;background:rgba(10,10,15,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:800;font-size:18px;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:28px}
+.nav-links a{text-decoration:none;color:var(--text-muted);font-size:13px;font-weight:500;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--primary);transform:scaleX(0);transition:transform 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:linear-gradient(135deg,var(--primary),var(--accent));color:white!important;padding:8px 20px;border-radius:50px;font-weight:600!important}
+.nav-cta::after{display:none!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 20px 60px;position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:6px 16px;border-radius:50px;font-size:12px;color:var(--primary2);margin-bottom:28px;background:rgba(124,106,255,0.08);animation:fadeInDown 0.8s ease}
+.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.hero h1{font-size:72px;font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:8px;animation:fadeInUp 0.8s ease 0.1s both}
+.name-gradient{background:linear-gradient(135deg,var(--primary2),var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200%;animation:gradientShift 4s ease infinite}
+@keyframes gradientShift{0%,100%{background-position:0%}50%{background-position:100%}}
+.hero-title{font-size:18px;color:var(--text-muted);margin-bottom:24px;font-weight:400;animation:fadeInUp 0.8s ease 0.2s both}
+.typewriter{font-size:15px;color:var(--primary2);margin-bottom:24px;min-height:24px;animation:fadeInUp 0.8s ease 0.3s both}
+.typewriter::after{content:'|';animation:blink 1s infinite;color:var(--accent)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-power{font-size:13px;color:var(--text-muted);margin-bottom:32px;animation:fadeInUp 0.8s ease 0.35s both}
+.hero-power strong{background:linear-gradient(135deg,var(--primary2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp 0.8s ease 0.4s both}
+.btn-glow{padding:14px 32px;border-radius:50px;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 0 30px rgba(124,106,255,0.4);transition:box-shadow 0.3s,transform 0.2s}
+.btn-glow:hover{box-shadow:0 0 50px rgba(124,106,255,0.7);transform:translateY(-2px)}
+.btn-ghost{padding:14px 32px;border-radius:50px;border:1px solid var(--border);color:var(--text-muted);text-decoration:none;font-size:15px;font-weight:500;transition:all 0.2s;background:rgba(255,255,255,0.03)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--text);background:rgba(124,106,255,0.08)}
+.scroll-hint{position:absolute;bottom:32px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--text-muted);font-size:12px;animation:fadeInUp 1s ease 1s both}
+.scroll-arrow{animation:scrollBounce 2s infinite;font-size:16px}
+@keyframes scrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* STATS STRIP */
+.stats-strip{position:relative;z-index:1;background:linear-gradient(90deg,rgba(124,106,255,0.06),rgba(244,114,182,0.06),rgba(56,189,248,0.06));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 20px}
+.stats-strip-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.stat-num{font-size:48px;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--primary2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:8px}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:100px 20px}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:64px}
+.section-num{font-size:11px;letter-spacing:3px;color:var(--primary);text-transform:uppercase;font-weight:700;margin-bottom:12px}
+.section-header h2{font-size:40px;font-weight:800;letter-spacing:-1px}
+.section-header h2 em{font-style:normal;background:linear-gradient(135deg,var(--primary2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* INTERACTION BADGE */
+.interact-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,106,255,0.1);border:1px solid rgba(124,106,255,0.28);color:var(--primary2);font-size:11px;font-weight:600;padding:5px 14px;border-radius:50px;margin-top:12px;animation:badgePulse 3s ease infinite}
+.interact-badge .ibdot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes badgePulse{0%,100%{opacity:1}50%{opacity:0.55}}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.about-visual{position:relative}
+.about-card-main{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px;text-align:center;box-shadow:0 0 60px rgba(124,106,255,0.1)}
+.about-avatar{font-size:72px;margin-bottom:16px}
+.about-name{font-size:22px;font-weight:800;margin-bottom:4px}
+.about-role{font-size:14px;color:var(--primary2);margin-bottom:20px}
+.about-stat-row{display:flex;justify-content:center;gap:24px}
+.about-stat .n{font-size:28px;font-weight:800;color:var(--primary2)}
+.about-stat .l{font-size:11px;color:var(--text-muted)}
+.floating-badge{position:absolute;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;font-size:13px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.fb1{top:-16px;right:-20px;color:var(--accent)}
+.fb2{bottom:-16px;left:-20px;color:var(--accent2)}
+.about-text p{color:var(--text-muted);font-size:15px;line-height:1.85;margin-bottom:18px}
+.about-quote{border-left:2px solid var(--primary);padding:12px 20px;margin-bottom:20px;background:rgba(124,106,255,0.06);border-radius:0 12px 12px 0}
+.about-quote p{font-size:14px;color:var(--text);font-style:italic;line-height:1.7;margin:0}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.about-tag{border:1px solid var(--border);padding:5px 14px;border-radius:50px;font-size:12px;color:var(--primary2);background:rgba(124,106,255,0.06)}
+/* MILESTONE STRIP */
+.milestone-strip{border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,0.02);padding:20px 16px;display:flex;align-items:flex-start;position:relative}
+.milestone-strip::before{content:'';position:absolute;top:29px;left:32px;right:32px;height:1px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--accent2));opacity:0.3}
+.milestone{flex:1;text-align:center;position:relative;padding:0 6px}
+.m-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);margin:0 auto 8px;border:2px solid var(--bg);box-shadow:0 0 8px rgba(124,106,255,0.6)}
+.m-year{font-size:11px;color:var(--primary2);font-weight:700;margin-bottom:3px}
+.m-text{font-size:10px;color:var(--text-muted);line-height:1.4}
+
+/* DESIGN VALUES */
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.value-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 30px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.value-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));transform:scaleX(0);transition:transform 0.35s}
+.value-card:hover::after,.value-card.open::after{transform:scaleX(1)}
+.value-card:hover{border-color:rgba(124,106,255,0.35)}
+.value-card.open{border-color:rgba(124,106,255,0.3);background:rgba(124,106,255,0.04)}
+.value-icon{font-size:34px;margin-bottom:14px}
+.value-title{font-size:18px;font-weight:800;margin-bottom:8px}
+.value-tagline{font-size:13px;color:var(--text-muted);font-style:italic;line-height:1.6}
+.value-expand{max-height:0;overflow:hidden;opacity:0;transition:max-height 0.5s ease,opacity 0.35s ease,padding-top 0.35s;font-size:14px;color:var(--text-muted);line-height:1.85;padding-top:0}
+.value-card.open .value-expand{max-height:220px;opacity:1;padding-top:16px}
+.value-evidence{margin-top:12px;padding:10px 14px;background:rgba(124,106,255,0.08);border-left:2px solid var(--primary);border-radius:0 8px 8px 0;font-size:12px;color:var(--primary2);font-weight:600;font-style:normal}
+.value-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.value-hint{font-size:11px;color:var(--text-muted);opacity:0.5;transition:opacity 0.3s}
+.value-card.open .value-hint{opacity:0}
+.value-close-hint{font-size:11px;color:var(--text-muted);opacity:0;transition:opacity 0.3s}
+.value-card.open .value-close-hint{opacity:0.5}
+
+/* SKILLS */
+.skills-section{background:linear-gradient(180deg,transparent,rgba(124,106,255,0.04),transparent)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.skill-card{height:200px;cursor:pointer;background:var(--card);border:1px solid var(--border);border-radius:20px;position:relative;transition:border-color 0.3s,box-shadow 0.3s}
+.skill-card:hover{border-color:rgba(124,106,255,0.4);box-shadow:0 16px 48px rgba(124,106,255,0.15)}
+.skill-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);border-radius:20px}
+.skill-card.flipped .skill-card-inner{transform:rotateY(180deg)}
+.skill-front,.skill-back{position:absolute;top:0;left:0;right:0;bottom:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:22px 26px;border-radius:20px;display:flex;flex-direction:column;justify-content:space-between}
+.skill-back{transform:rotateY(180deg);background:linear-gradient(135deg,rgba(124,106,255,0.14),rgba(244,114,182,0.08));border:1px solid rgba(124,106,255,0.25)}
+.skill-icon{font-size:28px;margin-bottom:8px}
+.skill-name{font-weight:700;font-size:14px;margin-bottom:8px}
+.skill-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;margin-bottom:5px}
+.skill-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width 1.5s cubic-bezier(0.4,0,0.2,1)}
+.skill-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+.skill-hint{font-size:10px;color:var(--primary2);opacity:0.6;text-align:right;margin-top:4px}
+.skill-back-title{font-size:11px;font-weight:700;color:var(--primary2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.skill-tools{list-style:none;flex:1}
+.skill-tools li{font-size:12px;color:var(--text-muted);padding:2px 0 2px 12px;position:relative;line-height:1.6}
+.skill-tools li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:9px}
+.skill-highlight{margin-top:8px;padding:6px 10px;background:rgba(124,106,255,0.1);border-radius:6px;font-size:11px;color:var(--primary2);font-weight:600}
+.skill-back-hint{font-size:10px;color:var(--text-muted);opacity:0.4;text-align:right;margin-top:4px}
+
+/* TOOLS SHOWCASE */
+.tools-showcase{margin-top:52px;padding-top:40px;border-top:1px solid var(--border)}
+.tools-row-title{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:18px}
+.tools-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:10px}
+.tool-chip{padding:7px 18px;border-radius:50px;font-size:12px;font-weight:600;border:1px solid;cursor:default;transition:all 0.25s;position:relative}
+.tool-chip:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.t-figma{background:rgba(162,89,255,0.1);color:#a259ff;border-color:rgba(162,89,255,0.25)}
+.t-ps{background:rgba(49,109,209,0.1);color:#6eb4f7;border-color:rgba(49,109,209,0.25)}
+.t-ai{background:rgba(255,152,0,0.1);color:#ffb74d;border-color:rgba(255,152,0,0.25)}
+.t-ae{background:rgba(153,102,255,0.1);color:#ce93d8;border-color:rgba(153,102,255,0.25)}
+.t-sketch{background:rgba(255,140,0,0.1);color:#ffa726;border-color:rgba(255,140,0,0.25)}
+.t-html{background:rgba(240,101,41,0.1);color:#ff8a65;border-color:rgba(240,101,41,0.25)}
+.t-lottie{background:rgba(0,197,255,0.1);color:#4dd0e1;border-color:rgba(0,197,255,0.25)}
+.t-maze{background:rgba(255,64,129,0.1);color:#f48fb1;border-color:rgba(255,64,129,0.25)}
+.t-notion{background:rgba(200,200,200,0.1);color:#b0bec5;border-color:rgba(200,200,200,0.2)}
+.t-figjam{background:rgba(24,255,152,0.08);color:#69f0ae;border-color:rgba(24,255,152,0.2)}
+.t-axure{background:rgba(0,188,212,0.1);color:#4dd0e1;border-color:rgba(0,188,212,0.25)}
+.t-principle{background:rgba(124,106,255,0.1);color:#a78bfa;border-color:rgba(124,106,255,0.25)}
+
+/* WORKS */
+.works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.work-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all 0.3s;cursor:pointer}
+.work-card:hover{transform:translateY(-6px);border-color:rgba(124,106,255,0.4);box-shadow:0 24px 64px rgba(0,0,0,0.4)}
+.work-preview{height:155px;display:flex;align-items:center;justify-content:center;font-size:50px;position:relative;overflow:hidden}
+.work-preview::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.3s;background:rgba(124,106,255,0.15)}
+.work-card:hover .work-preview::after{opacity:1}
+.work-preview-label{position:absolute;bottom:10px;right:12px;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:50px;background:rgba(0,0,0,0.5);color:var(--text-muted);opacity:0;transition:opacity 0.3s;text-transform:uppercase}
+.work-card:hover .work-preview-label{opacity:1}
+.work-body{padding:22px}
+.work-tags{display:flex;gap:6px;margin-bottom:10px}
+.work-tag{font-size:10px;font-weight:600;letter-spacing:1px;padding:3px 10px;border-radius:50px;text-transform:uppercase}
+.tag-design{background:rgba(244,114,182,0.15);color:var(--accent)}
+.tag-ux{background:rgba(56,189,248,0.15);color:var(--accent2)}
+.tag-branding{background:rgba(124,106,255,0.15);color:var(--primary2)}
+.work-name{font-size:16px;font-weight:700;margin-bottom:6px}
+.work-desc{font-size:13px;color:var(--text-muted);line-height:1.7}
+.work-result{margin-top:10px;font-size:12px;color:#4ade80;font-weight:600}
+.work-cta{margin-top:10px;font-size:12px;color:var(--primary2);font-weight:600;opacity:0;transition:opacity 0.2s}
+.work-card:hover .work-cta{opacity:1}
+
+/* EXPERIENCE */
+.exp-timeline{position:relative;padding-left:40px}
+.exp-timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--primary),var(--accent),transparent)}
+.exp-item{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;position:relative;transition:border-color 0.3s}
+.exp-item:hover{border-color:rgba(124,106,255,0.4)}
+.exp-item::before{content:'';position:absolute;left:-32px;top:32px;width:14px;height:14px;border-radius:50%;background:var(--primary);border:2px solid var(--bg);box-shadow:0 0 12px rgba(124,106,255,0.5)}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.exp-company{font-weight:800;font-size:16px}
+.exp-period{font-size:12px;padding:4px 12px;border-radius:50px;background:rgba(124,106,255,0.1);color:var(--primary2);font-weight:600}
+.exp-role{font-size:13px;color:var(--accent);margin-bottom:14px}
+.exp-list{list-style:none}
+.exp-list li{font-size:14px;color:var(--text-muted);padding:4px 0 4px 16px;position:relative;line-height:1.7}
+.exp-list li::before{content:'▸';position:absolute;left:0;color:var(--primary)}
+.exp-list li strong{color:var(--text)}
+.exp-list-extra{max-height:0;overflow:hidden;opacity:0;transition:max-height 0.4s ease,opacity 0.35s ease}
+.exp-list-extra.expanded{max-height:300px;opacity:1}
+.exp-bottom{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+.exp-skill-tag{font-size:11px;padding:3px 10px;border-radius:50px;border:1px solid var(--border);color:var(--text-muted)}
+.exp-toggle{background:none;border:1px solid var(--border);color:var(--text-muted);padding:5px 16px;border-radius:50px;font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.exp-toggle:hover{border-color:var(--primary);color:var(--primary2)}
+.exp-toggle.open{border-color:rgba(124,106,255,0.4);color:var(--primary2)}
+
+/* EDUCATION */
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;transition:border-color 0.3s}
+.edu-card:hover{border-color:rgba(124,106,255,0.4)}
+.edu-icon-box{width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.edu-school{font-size:20px;font-weight:800;margin-bottom:4px}
+.edu-degree{font-size:14px;color:var(--primary2);font-weight:600;margin-bottom:4px}
+.edu-year{font-size:12px;color:var(--text-muted);margin-bottom:18px}
+.edu-highlights{display:flex;flex-wrap:wrap;gap:8px}
+.edu-badge{background:rgba(124,106,255,0.1);border:1px solid var(--border);padding:5px 14px;border-radius:50px;font-size:12px;color:var(--primary2);font-weight:500}
+
+/* AWARDS */
+.awards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.award-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 28px;display:flex;flex-direction:column;transition:all 0.3s;cursor:pointer}
+.award-card:hover{border-color:rgba(244,114,182,0.4);box-shadow:0 8px 32px rgba(244,114,182,0.08)}
+.award-top{display:flex;align-items:center;gap:16px}
+.award-icon-wrap{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,rgba(244,114,182,0.2),rgba(124,106,255,0.2));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.award-info{flex:1}
+.award-name{font-weight:700;font-size:14px;margin-bottom:3px}
+.award-org{font-size:12px;color:var(--accent);margin-bottom:2px}
+.award-year{font-size:11px;color:var(--text-muted)}
+.award-arrow{margin-left:auto;font-size:14px;color:var(--text-muted);transition:transform 0.3s;flex-shrink:0}
+.award-card.award-open .award-arrow{transform:rotate(180deg)}
+.award-desc{max-height:0;overflow:hidden;opacity:0;font-size:13px;color:var(--text-muted);line-height:1.75;transition:max-height 0.4s ease,opacity 0.3s ease,padding-top 0.3s;padding-top:0}
+.award-card.award-open .award-desc{max-height:80px;opacity:1;padding-top:14px;border-top:1px solid var(--border);margin-top:14px}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testimonial-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative;transition:all 0.3s}
+.testimonial-card:hover{border-color:rgba(124,106,255,0.4);transform:translateY(-4px);box-shadow:0 16px 48px rgba(124,106,255,0.12)}
+.testimonial-card::before{content:'\201C';position:absolute;top:12px;right:20px;font-size:80px;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--primary2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:0.2}
+.stars{color:#fbbf24;font-size:14px;margin-bottom:14px;letter-spacing:2px}
+.testimonial-text{font-size:14px;color:var(--text-muted);line-height:1.85;margin-bottom:22px}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.author-avatar{width:42px;height:42px;border-radius:50%;font-size:22px;background:rgba(124,106,255,0.1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-weight:700;font-size:14px}
+.author-title{font-size:12px;color:var(--text-muted);margin-top:2px}
+
+/* CONTACT */
+.contact-section{background:radial-gradient(ellipse at center,rgba(124,106,255,0.12) 0%,transparent 70%)}
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:600px;margin:0 auto}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;text-align:center;transition:all 0.3s}
+.contact-card:hover{border-color:rgba(124,106,255,0.5);transform:translateY(-3px);box-shadow:0 12px 40px rgba(124,106,255,0.15)}
+.contact-icon{font-size:32px;margin-bottom:10px}
+.contact-label{font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.contact-value{font-size:15px;font-weight:600}
+.hire-cta{text-align:center;margin-top:48px}
+.hire-cta p{color:var(--text-muted);margin-bottom:20px;font-size:15px}
+footer{text-align:center;padding:32px;background:rgba(0,0,0,0.3);border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)}
+
+/* WORK MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s ease}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-content{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px;max-width:660px;width:100%;max-height:88vh;overflow-y:auto;position:relative;transform:scale(0.92) translateY(16px);transition:transform 0.3s ease;scrollbar-width:thin;scrollbar-color:var(--primary) transparent}
+.modal-overlay.active .modal-content{transform:scale(1) translateY(0)}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.modal-close:hover{background:rgba(255,255,255,0.14);color:var(--text)}
+.modal-header{display:flex;gap:20px;align-items:flex-start;margin-bottom:28px;padding-right:32px}
+.modal-emoji-box{width:64px;height:64px;border-radius:16px;font-size:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(124,106,255,0.15),rgba(244,114,182,0.12))}
+.modal-title{font-size:22px;font-weight:800;margin-bottom:8px}
+.modal-tag-row{display:flex;gap:6px;flex-wrap:wrap}
+.modal-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px}
+.modal-divider{height:1px;background:var(--border);margin:20px 0}
+.modal-section{margin-bottom:20px}
+.modal-section-title{font-size:12px;font-weight:700;color:var(--primary2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.modal-text{font-size:14px;color:var(--text-muted);line-height:1.8}
+.modal-steps{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.modal-step{font-size:12px;font-weight:600;color:var(--text-muted);background:rgba(124,106,255,0.1);border:1px solid var(--border);padding:6px 12px;border-radius:8px}
+.modal-step-arr{color:var(--primary);font-size:12px}
+.modal-decisions{list-style:none}
+.modal-decisions li{font-size:14px;color:var(--text-muted);padding:5px 0 5px 16px;position:relative;line-height:1.7}
+.modal-decisions li::before{content:'▸';position:absolute;left:0;color:var(--accent)}
+.modal-highlights{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.modal-hl{padding:5px 14px;border-radius:50px;font-size:12px;font-weight:600}
+.mhl-design{background:rgba(244,114,182,0.12);color:var(--accent);border:1px solid rgba(244,114,182,0.2)}
+.mhl-ux{background:rgba(56,189,248,0.12);color:var(--accent2);border:1px solid rgba(56,189,248,0.2)}
+.mhl-research{background:rgba(124,106,255,0.12);color:var(--primary2);border:1px solid rgba(124,106,255,0.2)}
+.modal-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.modal-metric{background:rgba(124,106,255,0.08);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+.modal-metric-val{font-size:18px;font-weight:800;color:var(--primary2);margin-bottom:4px}
+.modal-metric-label{font-size:11px;color:var(--text-muted)}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{gap:12px}.hero h1{font-size:44px}
+  .about-grid,.skills-grid,.works-grid,.values-grid,.awards-grid,.testimonials-grid,.contact-grid{grid-template-columns:1fr}
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr)}
+  .edu-card{grid-template-columns:1fr}
+  .modal-metrics{grid-template-columns:repeat(2,1fr)}
+  .milestone-strip{flex-wrap:wrap;gap:16px}
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<nav>
+  <div class="nav-logo">陈晓雨</div>
+  <div class="nav-links">
+    <a href="#about">关于</a>
+    <a href="#values">理念</a>
+    <a href="#skills">技能</a>
+    <a href="#works">作品</a>
+    <a href="#experience">经历</a>
+    <a href="#contact" class="nav-cta">联系我</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-tag"><span class="dot"></span>开放新机会 · 全职 / 远程均可</div>
+  <h1>Hi, 我是<br><span class="name-gradient">陈晓雨</span></h1>
+  <div class="hero-title">UI/UX 设计师 · 品牌设计师</div>
+  <div class="typewriter" id="typewriter"></div>
+  <div class="hero-power">过去4年，我设计的界面被 <strong>3,000万+</strong> 人每天使用</div>
+  <div class="hero-btns">
+    <a href="#works" class="btn-glow">查看作品集</a>
+    <a href="#contact" class="btn-ghost">📬 联系我</a>
+  </div>
+  <div class="scroll-hint"><span>向下滚动</span><span class="scroll-arrow">↓</span></div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-strip-inner reveal">
+    <div><div class="stat-num" data-count="4">0</div><div class="stat-label">年设计经验</div></div>
+    <div><div class="stat-num" data-count="60">0</div><div class="stat-label">交付项目</div></div>
+    <div><div class="stat-num" data-count="4">0</div><div class="stat-label">设计大奖</div></div>
+    <div><div class="stat-num" data-count="98">0</div><div class="stat-label">% 客户好评率</div></div>
+  </div>
+</div>
+
+<!-- ABOUT 01 -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">01 · About</div>
+      <h2>关于<em>我</em></h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-visual">
+        <div class="about-card-main">
+          <div class="about-avatar">👩‍🎨</div>
+          <div class="about-name">陈晓雨</div>
+          <div class="about-role">UI/UX Designer</div>
+          <div class="about-stat-row">
+            <div class="about-stat"><div class="n">4+</div><div class="l">年经验</div></div>
+            <div class="about-stat"><div class="n">60+</div><div class="l">项目</div></div>
+            <div class="about-stat"><div class="n">98%</div><div class="l">好评率</div></div>
+          </div>
+        </div>
+        <div class="floating-badge fb1">✨ Figma Expert</div>
+        <div class="floating-badge fb2">🏆 腾讯年度优秀设计师</div>
+      </div>
+      <div class="about-text">
+        <p>你好，我是晓雨，一名专注用户体验与视觉设计的设计师，拥有4年互联网产品设计经历，曾就职于腾讯微信事业群和网易互娱设计中心。</p>
+        <div class="about-quote">
+          <p>「我进入设计行业的原因很简单——我想让人们在使用产品时，感受到被尊重。」</p>
+        </div>
+        <p>从用研到原型、从视觉到验证，我擅长把复杂产品逻辑转化为简洁优雅的界面体验。目前正在寻找充满挑战的高级设计职位。</p>
+        <div class="about-tags">
+          <span class="about-tag">📍 深圳</span>
+          <span class="about-tag">🎓 广州美术学院</span>
+          <span class="about-tag">💼 全职求职中</span>
+          <span class="about-tag">🌐 可远程</span>
+          <span class="about-tag">🏢 腾讯 · 网易</span>
+        </div>
+        <div class="milestone-strip reveal">
+          <div class="milestone"><div class="m-dot"></div><div class="m-year">2016</div><div class="m-text">广州美院<br>入学</div></div>
+          <div class="milestone"><div class="m-dot" style="background:var(--accent2)"></div><div class="m-year">2019</div><div class="m-text">广告大赛<br>全国金奖</div></div>
+          <div class="milestone"><div class="m-dot"></div><div class="m-year">2020</div><div class="m-text">加入<br>网易互娱</div></div>
+          <div class="milestone"><div class="m-dot" style="background:var(--accent)"></div><div class="m-year">2022</div><div class="m-text">加入<br>腾讯微信</div></div>
+          <div class="milestone"><div class="m-dot" style="background:#4ade80"></div><div class="m-year">2026</div><div class="m-text">开放<br>新机会</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN VALUES 02 -->
+<section id="values" style="background:linear-gradient(180deg,transparent,rgba(124,106,255,0.03),transparent)">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">02 · Values</div>
+      <h2>设计<em>信条</em></h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-top:12px;line-height:1.7">4年沉淀下来的设计观，驱动我做出每一个设计决策</p>
+      <div class="interact-badge"><span class="ibdot"></span>点击卡片 · 展开详情</div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal" onclick="toggleValue(this)">
+        <div class="value-icon">🧭</div>
+        <div class="value-title">以人为本</div>
+        <div class="value-tagline">「每个像素背后，都站着一个真实的人。」</div>
+        <div class="value-expand">
+          在腾讯的两年里，我参与了超过30次深度用户研究。真正相信：没有「用户」这个抽象概念，只有一个个有名字、有故事的真实个体。好的设计，从真正理解他们开始——不是猜测，是倾听。
+          <div class="value-evidence">代表实践：银行App改版 | 用研访谈12人 → 任务完成率提升42%</div>
+        </div>
+        <div class="value-footer"><span class="value-hint">▾ 点击展开</span><span class="value-close-hint">▴ 点击收起</span></div>
+      </div>
+      <div class="value-card reveal" onclick="toggleValue(this)">
+        <div class="value-icon">✂️</div>
+        <div class="value-title">简为至美</div>
+        <div class="value-tagline">「去掉一个按钮，往往比加一个功能更难。」</div>
+        <div class="value-expand">
+          设计师最大的挑战不是「怎么加」，而是「勇敢地减」。微信读书改版时，我们砍掉了17个曾经存在的功能入口，每一刀都需要用数据和用户反馈来说话，换来的是更纯粹的阅读体验和NPS提升18分。
+          <div class="value-evidence">代表实践：微信读书改版 | 去除17个入口 → NPS净推荐值 +18分</div>
+        </div>
+        <div class="value-footer"><span class="value-hint">▾ 点击展开</span><span class="value-close-hint">▴ 点击收起</span></div>
+      </div>
+      <div class="value-card reveal" onclick="toggleValue(this)">
+        <div class="value-icon">📊</div>
+        <div class="value-title">数据是罗盘</div>
+        <div class="value-tagline">「感性决定方向，数据验证路径。」</div>
+        <div class="value-expand">
+          我不相信「设计师直觉」可以代替真实数据。每次重要改版，我都坚持先设计AB测试方案，再做视觉交付。设计的「感觉对了」是出发点，数据才是最终裁判——它也是和产品经理对话的共同语言。
+          <div class="value-evidence">代表实践：微信读书全量改版 | 先AB测试 → 再全量，零线上事故</div>
+        </div>
+        <div class="value-footer"><span class="value-hint">▾ 点击展开</span><span class="value-close-hint">▴ 点击收起</span></div>
+      </div>
+      <div class="value-card reveal" onclick="toggleValue(this)">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">1px的执着</div>
+        <div class="value-tagline">「细节不是细枝末节，细节就是产品本身。」</div>
+        <div class="value-expand">
+          真正的高质量设计，是用户感知不到任何「别扭」的地方。我曾经为一个按钮的圆角从8px改到12px反复调整了6次——不是强迫症，是因为12px更符合人手指自然弯曲的弧度。这份执着，帮助我把设计还原度做到98%。
+          <div class="value-evidence">代表实践：游戏UI设计 | 高保真交付 → 研发还原度达98%</div>
+        </div>
+        <div class="value-footer"><span class="value-hint">▾ 点击展开</span><span class="value-close-hint">▴ 点击收起</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS 03 -->
+<section id="skills" class="skills-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">03 · Skills</div>
+      <h2>核心<em>技能</em></h2>
+      <div class="interact-badge"><span class="ibdot"></span>点击卡片 · 翻转查看工具详情</div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">🎨</div><div class="skill-name">UI 视觉设计</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div><div class="skill-meta"><span>专家级</span><span>95%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>Figma · Sketch · Adobe XD</li><li>栅格系统 · 色彩理论 · 字体排印</li><li>精通视觉规范制定与落地</li></ul><div class="skill-highlight">🏆 代表：腾讯读书视觉改版</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">🔍</div><div class="skill-name">UX 用户研究</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="88"></div></div><div class="skill-meta"><span>熟练</span><span>88%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>用户访谈 · 可用性测试 · A/B测试</li><li>Maze · UserTesting · 焦点小组</li><li>数据驱动设计决策</li></ul><div class="skill-highlight">📋 累计完成 30+ 次深度用研</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">⚡</div><div class="skill-name">Figma 专家</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="98"></div></div><div class="skill-meta"><span>专家级</span><span>98%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>Auto Layout · 组件库 · Dev Mode</li><li>FigJam · 原型联动 · 多人协作</li><li>Figma Plugin 开发使用</li></ul><div class="skill-highlight">🏗️ 主导腾讯读书设计系统建设</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">🌈</div><div class="skill-name">品牌设计</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="90"></div></div><div class="skill-meta"><span>专家级</span><span>90%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>Adobe Illustrator · Photoshop</li><li>Logo设计 · VI系统 · 包装设计</li><li>从0到1完整品牌视觉体系搭建</li></ul><div class="skill-highlight">✅ 3个品牌完整VI设计交付</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">🎭</div><div class="skill-name">动效设计</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="82"></div></div><div class="skill-meta"><span>熟练</span><span>82%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>After Effects · Lottie · Principle</li><li>CSS动效 · 微交互设计</li><li>让关键流程「有感觉」</li></ul><div class="skill-highlight">🎬 为腾讯读书设计过15+微交互</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">📐</div><div class="skill-name">设计系统搭建</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="93"></div></div><div class="skill-meta"><span>专家级</span><span>93%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>Figma · Design Token · Storybook</li><li>组件化 · 多端适配规范</li><li>设计-研发交付流程优化</li></ul><div class="skill-highlight">⚡ 团队交付效率提升35%</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">📱</div><div class="skill-name">移动端设计</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="92"></div></div><div class="skill-meta"><span>专家级</span><span>92%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>iOS · Android · HarmonyOS</li><li>HIG · Material Design 规范</li><li>手势交互 · 无障碍设计</li></ul><div class="skill-highlight">📱 作品日活用户超 500万</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">💻</div><div class="skill-name">前端实现</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div><div class="skill-meta"><span>熟练</span><span>75%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>HTML · CSS · JavaScript · Vue</li><li>独立完成落地页 & 设计验证原型</li><li>能与开发无缝对接验收</li></ul><div class="skill-highlight">🔧 游戏UI还原度做到98%</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+      <div class="skill-card reveal" onclick="flipCard(this)">
+        <div class="skill-card-inner">
+          <div class="skill-front"><div><div class="skill-icon">🖥️</div><div class="skill-name">B端产品设计</div></div><div><div class="skill-bar"><div class="skill-fill" data-width="85"></div></div><div class="skill-meta"><span>熟练</span><span>85%</span></div><div class="skill-hint">↩ 点击翻转</div></div></div>
+          <div class="skill-back"><div class="skill-back-title">主要工具 & 专长</div><ul class="skill-tools"><li>Figma · Axure · 数据可视化</li><li>复杂表单 · 权限体系 · 看板</li><li>高信息密度下的可读性优化</li></ul><div class="skill-highlight">📊 SaaS满意度 4.7/5.0</div><div class="skill-back-hint">↩ 再次点击返回</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS SHOWCASE -->
+    <div class="tools-showcase reveal">
+      <div class="tools-row-title">设计武器库 · 日常在用工具</div>
+      <div class="tools-chips">
+        <span class="tool-chip t-figma">Figma</span>
+        <span class="tool-chip t-ps">Photoshop</span>
+        <span class="tool-chip t-ai">Illustrator</span>
+        <span class="tool-chip t-ae">After Effects</span>
+        <span class="tool-chip t-sketch">Sketch</span>
+        <span class="tool-chip t-lottie">Lottie</span>
+        <span class="tool-chip t-maze">Maze</span>
+        <span class="tool-chip t-figjam">FigJam</span>
+        <span class="tool-chip t-notion">Notion</span>
+        <span class="tool-chip t-html">HTML/CSS</span>
+        <span class="tool-chip t-axure">Axure</span>
+        <span class="tool-chip t-principle">Principle</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS 04 -->
+<section id="works">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">04 · Works</div>
+      <h2>代表<em>作品</em></h2>
+      <div class="interact-badge"><span class="ibdot"></span>点击卡片 · 查看完整案例拆解</div>
+    </div>
+    <div class="works-grid">
+      <div class="work-card reveal" onclick="openModal(0)">
+        <div class="work-preview" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">🏦<span class="work-preview-label">查看案例</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span class="work-tag tag-ux">UX</span><span class="work-tag tag-design">UI</span></div>
+          <div class="work-name">某银行App重设计</div>
+          <div class="work-desc">针对40岁+用户群体无障碍改造，大幅简化核心转账流程，3个月完整交付。</div>
+          <div class="work-result">📈 任务完成率+42% · App Store 4.2→4.8</div>
+          <div class="work-cta">查看完整案例拆解 →</div>
+        </div>
+      </div>
+      <div class="work-card reveal" onclick="openModal(1)">
+        <div class="work-preview" style="background:linear-gradient(135deg,#0f2027,#203a43)">🛍️<span class="work-preview-label">查看案例</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span class="work-tag tag-design">UI</span><span class="work-tag tag-branding">品牌</span></div>
+          <div class="work-name">新消费品牌视觉系统</div>
+          <div class="work-desc">新锐美妆品牌从0到1完整VI设计，Logo·包装·电商·社媒物料全套交付。</div>
+          <div class="work-result">🚀 品牌上线首月GMV破500万</div>
+          <div class="work-cta">查看完整案例拆解 →</div>
+        </div>
+      </div>
+      <div class="work-card reveal" onclick="openModal(2)">
+        <div class="work-preview" style="background:linear-gradient(135deg,#1a0533,#3d0066)">🎵<span class="work-preview-label">查看案例</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span class="work-tag tag-ux">UX</span><span class="work-tag tag-design">UI</span></div>
+          <div class="work-name">音乐社区产品设计</div>
+          <div class="work-desc">从0到1设计独立音乐人创作分享社区，完成完整用研·信息架构·UI交付。</div>
+          <div class="work-result">✅ 顺利完成Pre-A轮融资演示</div>
+          <div class="work-cta">查看完整案例拆解 →</div>
+        </div>
+      </div>
+      <div class="work-card reveal" onclick="openModal(3)">
+        <div class="work-preview" style="background:linear-gradient(135deg,#0d1117,#1f2937)">📊<span class="work-preview-label">查看案例</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span class="work-tag tag-ux">UX</span><span class="work-tag tag-branding">B端</span></div>
+          <div class="work-name">SaaS数据看板系统</div>
+          <div class="work-desc">企业数据分析平台复杂可视化界面设计，高信息密度下的易读性极致优化。</div>
+          <div class="work-result">⭐ 用户满意度 4.7/5.0</div>
+          <div class="work-cta">查看完整案例拆解 →</div>
+        </div>
+      </div>
+      <div class="work-card reveal" onclick="openModal(4)">
+        <div class="work-preview" style="background:linear-gradient(135deg,#0a2a2a,#0d4040)">📚<span class="work-preview-label">查看案例</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span class="work-tag tag-design">UI</span><span class="work-tag tag-ux">UX</span></div>
+          <div class="work-name">微信读书核心模块改版</div>
+          <div class="work-desc">主导书架·阅读·社交三大核心模块全面改版，服务DAU超3000万用户。</div>
+          <div class="work-result">⚡ NPS+18分 · 设计效率+35%</div>
+          <div class="work-cta">查看完整案例拆解 →</div>
+        </div>
+      </div>
+      <div class="work-card reveal" onclick="openModal(5)">
+        <div class="work-preview" style="background:linear-gradient(135deg,#1a0a2e,#2e0a4a)">🎮<span class="work-preview-label">查看案例</span></div>
+        <div class="work-body">
+          <div class="work-tags"><span class="work-tag tag-design">UI</span><span class="work-tag tag-branding">游戏</span></div>
+          <div class="work-name">手游完整UI设计方案</div>
+          <div class="work-desc">网易互娱2款手游全程UI设计，HUD·菜单·活动页·运营物料全套交付。</div>
+          <div class="work-result">🎯 还原度98% · 双端顺利上线</div>
+          <div class="work-cta">查看完整案例拆解 →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE 05 -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">05 · Experience</div>
+      <h2>工作<em>经历</em></h2>
+      <div class="interact-badge"><span class="ibdot"></span>点击「查看更多」· 展开完整细节</div>
+    </div>
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-top"><div class="exp-company">腾讯</div><span class="exp-period">2022.07 — 至今</span></div>
+        <div class="exp-role">高级UI/UX设计师 · 微信事业群</div>
+        <ul class="exp-list">
+          <li>负责微信读书核心功能UI/UX设计，服务<strong>DAU超3000万</strong>用户</li>
+          <li>主导书架·阅读界面·社交功能三大模块完整改版，<strong>NPS提升18分</strong></li>
+          <li>建立微信读书组件库规范，团队设计效率提升<strong>35%</strong></li>
+        </ul>
+        <ul class="exp-list exp-list-extra">
+          <li>独立完成用户研究到高保真交付全流程，联合前端完成设计还原验收</li>
+          <li>获<strong>2023年度优秀设计师</strong>称号（全群设计师Top 5%）</li>
+          <li>主持10+次跨部门设计评审，对齐产品·研发·运营多方需求</li>
+          <li>参与招聘面试，累计面试设计候选人30+人次</li>
+          <li>推动引入AB测试机制，设计决策效率显著提升</li>
+        </ul>
+        <div class="exp-bottom">
+          <span class="exp-skill-tag">Figma</span><span class="exp-skill-tag">用户研究</span><span class="exp-skill-tag">移动端</span><span class="exp-skill-tag">设计系统</span>
+          <button class="exp-toggle" onclick="toggleExp(this)">查看更多详情 ▾</button>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-top"><div class="exp-company">网易</div><span class="exp-period">2020.07 — 2022.06</span></div>
+        <div class="exp-role">UI设计师 · 互娱设计中心</div>
+        <ul class="exp-list">
+          <li>参与多款手游UI设计，<strong>独立负责2款游戏完整UI方案</strong>从立项到上线</li>
+          <li>配合前端完成设计还原验收，<strong>还原度达98%</strong></li>
+          <li>获<strong>2021年网易互娱优秀员工</strong>奖励</li>
+        </ul>
+        <ul class="exp-list exp-list-extra">
+          <li>完成游戏HUD·菜单系统·活动页面等全系列设计，风格统一度高</li>
+          <li>建立游戏运营活动页面模板库，<strong>运营出图效率提升40%</strong></li>
+          <li>推动设计团队从PS迁移到Figma，完成工具链升级</li>
+          <li>参与新人培训体系搭建，输出Figma工作流教程3套</li>
+        </ul>
+        <div class="exp-bottom">
+          <span class="exp-skill-tag">游戏UI</span><span class="exp-skill-tag">品牌设计</span><span class="exp-skill-tag">动效</span><span class="exp-skill-tag">前端协作</span>
+          <button class="exp-toggle" onclick="toggleExp(this)">查看更多详情 ▾</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION 06 -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">06 · Education</div>
+      <h2>教育<em>背景</em></h2>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon-box">🎓</div>
+      <div>
+        <div class="edu-school">广州美术学院</div>
+        <div class="edu-degree">视觉传达设计 · 本科</div>
+        <div class="edu-year">2016 — 2020 &nbsp;|&nbsp; 广州</div>
+        <div class="edu-highlights">
+          <span class="edu-badge">🏅 专业排名前5%</span>
+          <span class="edu-badge">📜 优秀毕业论文</span>
+          <span class="edu-badge">💰 校级奖学金（连续3年）</span>
+          <span class="edu-badge">🏆 全国大学生广告大赛金奖</span>
+          <span class="edu-badge">🎨 毕业设计展最佳作品</span>
+          <span class="edu-badge">👥 学生设计协会副主席</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS 07 -->
+<section id="awards">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">07 · Awards</div>
+      <h2>荣誉<em>奖项</em></h2>
+      <div class="interact-badge"><span class="ibdot"></span>点击卡片 · 展开颁奖说明</div>
+    </div>
+    <div class="awards-grid">
+      <div class="award-card reveal" onclick="toggleAward(this)">
+        <div class="award-top"><div class="award-icon-wrap">🏆</div><div class="award-info"><div class="award-name">2023年度优秀设计师</div><div class="award-org">腾讯 · 微信事业群</div><div class="award-year">全群设计师Top 5%</div></div><div class="award-arrow">▾</div></div>
+        <div class="award-desc">微信事业群年度评定，由全体员工投票结合绩效双维度评选，获奖比例严格控制在5%以内，是腾讯设计师的年度最高荣誉之一。</div>
+      </div>
+      <div class="award-card reveal" onclick="toggleAward(this)">
+        <div class="award-top"><div class="award-icon-wrap">🥇</div><div class="award-info"><div class="award-name">全国大学生广告艺术大赛金奖</div><div class="award-org">中国广告协会</div><div class="award-year">2019年 · 全国赛最高奖</div></div><div class="award-arrow">▾</div></div>
+        <div class="award-desc">全国最高规格大学生广告设计竞赛，年参赛团队超3000支，金奖全国仅5名。以「城市迁徙中的情感连接」为题，获评委一致高度评价。</div>
+      </div>
+      <div class="award-card reveal" onclick="toggleAward(this)">
+        <div class="award-top"><div class="award-icon-wrap">⭐</div><div class="award-info"><div class="award-name">网易互娱优秀员工</div><div class="award-org">网易互动娱乐事业群</div><div class="award-year">2021年 · 年度全员表彰</div></div><div class="award-arrow">▾</div></div>
+        <div class="award-desc">网易互娱年度全员表彰，综合考察设计质量·跨团队协作与项目贡献，全设计中心约8%员工获奖，入职第二年即获此荣誉。</div>
+      </div>
+      <div class="award-card reveal" onclick="toggleAward(this)">
+        <div class="award-top"><div class="award-icon-wrap">🌐</div><div class="award-info"><div class="award-name">iF Design Award 候选</div><div class="award-org">iF Design Award · 德国</div><div class="award-year">2024年 · 国际设计大奖</div></div><div class="award-arrow">▾</div></div>
+        <div class="award-desc">全球最具影响力的工业与传播设计奖项之一，以银行App无障碍改造项目参赛，进入最终候选名单（约全球投稿的3%），入围即是极高认可。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS 08 -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">08 · Reviews</div>
+      <h2>客户<em>评价</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">晓雨的设计功底极其扎实，方案几乎一稿即过，完全超出预期。她对用户体验的理解比很多开发背景的产品同学还要深入，合作行云流水。</div>
+        <div class="testimonial-author"><div class="author-avatar">👔</div><div><div class="author-name">刘先生</div><div class="author-title">某头部互联网公司 · 产品总监</div></div></div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">品牌从0到1，整套视觉体系全由晓雨主导。她把「年轻、高级感」诠释得极准确，上线首月GMV直接破500万，超出所有人预期。</div>
+        <div class="testimonial-author"><div class="author-avatar">👩‍💼</div><div><div class="author-name">陈总</div><div class="author-title">新消费美妆品牌 · 创始人</div></div></div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">路演前一周临时找到晓雨，极端时间压力下她交付了完整高质量的设计方案，直接帮我们拿下了投资人。极力推荐！</div>
+        <div class="testimonial-author"><div class="author-avatar">🧑‍💻</div><div><div class="author-name">Alex</div><div class="author-title">独立音乐社区 · 联合创始人 CEO</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT 09 -->
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-num">09 · Contact</div>
+      <h2>联系<em>我</em></h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-card"><div class="contact-icon">📧</div><div class="contact-label">Email</div><div class="contact-value">chenxy@design.com</div></div>
+      <div class="contact-card"><div class="contact-icon">💬</div><div class="contact-label">微信</div><div class="contact-value">chenxy_design</div></div>
+      <div class="contact-card"><div class="contact-icon">💼</div><div class="contact-label">作品集</div><div class="contact-value">chenxy.design</div></div>
+      <div class="contact-card"><div class="contact-icon">📍</div><div class="contact-label">城市</div><div class="contact-value">深圳 · 可远程</div></div>
+    </div>
+    <div class="hire-cta reveal">
+      <p>正在寻找下一个充满挑战的设计机会 ✨</p>
+      <a href="mailto:chenxy@design.com" class="btn-glow">立即发起合作</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 陈晓雨 · Designed with ❤️ · 由职灵AI定制</footer>
+
+<!-- WORK MODAL -->
+<div id="work-modal" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-header">
+      <div class="modal-emoji-box" id="modal-emoji"></div>
+      <div><div class="modal-title" id="modal-title"></div><div class="modal-tag-row" id="modal-tags"></div></div>
+    </div>
+    <div id="modal-highlights-row"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-section"><div class="modal-section-title">📋 项目背景</div><div class="modal-text" id="modal-bg"></div></div>
+    <div class="modal-divider"></div>
+    <div class="modal-section"><div class="modal-section-title">⚙️ 设计过程</div><div class="modal-steps" id="modal-steps"></div></div>
+    <div class="modal-divider"></div>
+    <div class="modal-section"><div class="modal-section-title">💡 核心设计决策</div><ul class="modal-decisions" id="modal-decisions"></ul></div>
+    <div class="modal-divider"></div>
+    <div class="modal-section"><div class="modal-section-title">📈 项目成果</div><div class="modal-metrics" id="modal-metrics"></div></div>
+  </div>
+</div>
+
+<script>
+// PARTICLES
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let ptcls=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();window.addEventListener('resize',resize);
+class P{constructor(){this.r()}r(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.s=Math.random()*1.5+0.3;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.o=Math.random()*.5+.1;this.c=Math.random()>.5?'124,106,255':'244,114,182'}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height)this.r()}d(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(${this.c},${this.o})`;ctx.fill()}}
+for(let i=0;i<120;i++)ptcls.push(new P());
+(function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);ptcls.forEach(p=>{p.u();p.d()});requestAnimationFrame(loop)})();
+
+// TYPEWRITER
+const phrases=['将复杂化为简洁','用设计解决问题','让用户爱上产品','创造有温度的体验'];
+let pi=0,ci=0,del=false;
+const tw=document.getElementById('typewriter');
+function type(){const cur=phrases[pi];if(!del){tw.textContent=cur.substring(0,ci+1);ci++;if(ci===cur.length){del=true;setTimeout(type,2000);return}}else{tw.textContent=cur.substring(0,ci-1);ci--;if(ci===0){del=false;pi=(pi+1)%phrases.length}}setTimeout(type,del?60:100)}
+type();
+
+// SCROLL REVEAL
+const revObs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);revObs.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r=>revObs.observe(r));
+
+// SKILL BARS
+const barObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.skill-fill').forEach(f=>f.style.width=f.dataset.width+'%')})},{threshold:0.3});
+document.querySelectorAll('.skills-grid').forEach(g=>barObs.observe(g));
+
+// STATS COUNTER
+const countObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.stat-num[data-count]').forEach(el=>{const target=+el.dataset.count,dur=1600,step=dur/target;let cur=0;const t=setInterval(()=>{cur++;el.textContent=cur+(el.nextElementSibling?.textContent.includes('%')?'+':'');if(cur>=target){el.textContent=target+(target===98?'':'+');clearInterval(t)}},step)});countObs.unobserve(e.target)}})},{threshold:0.5});
+document.querySelectorAll('.stats-strip-inner').forEach(g=>countObs.observe(g));
+
+// INTERACTIONS
+function flipCard(c){c.classList.toggle('flipped')}
+function toggleValue(c){c.classList.toggle('open')}
+function toggleExp(btn){const ex=btn.closest('.exp-item').querySelector('.exp-list-extra');const open=ex.classList.toggle('expanded');btn.classList.toggle('open',open);btn.innerHTML=open?'收起详情 ▴':'查看更多详情 ▾'}
+function toggleAward(c){c.classList.toggle('award-open')}
+
+// WORK DATA
+const workData=[
+  {emoji:'🏦',title:'某银行App重设计',tags:[{t:'UX',c:'tag-ux'},{t:'UI',c:'tag-design'}],
+   hl:[{t:'无障碍设计',c:'mhl-ux'},{t:'流程重构',c:'mhl-research'},{t:'数据驱动',c:'mhl-design'}],
+   bg:'银行委托重设计其手机银行App，核心痛点是40岁以上用户反映转账流程过于复杂（原始设计需7步），用户投诉率居高不下，老年用户月活流失明显，需要彻底无障碍体验改造。',
+   steps:['用户访谈×12人','竞品分析','流程重构','原型测试×3轮','视觉交付'],
+   decisions:['大字体无障碍模式，最小点击区域保证44px以上，符合无障碍标准','核心转账步骤从7步压缩至3步，去除所有非必要确认跳转','颜色编码区分不同账户类型，降低老年用户认知负担'],
+   metrics:[{v:'+42%',l:'任务完成率'},{v:'4.2→4.8',l:'App Store评分'},{v:'3个月',l:'完整交付'}]},
+  {emoji:'🛍️',title:'新消费品牌视觉系统',tags:[{t:'UI',c:'tag-design'},{t:'品牌',c:'tag-branding'}],
+   hl:[{t:'品牌设计',c:'mhl-design'},{t:'VI系统',c:'mhl-ux'},{t:'包装设计',c:'mhl-research'}],
+   bg:'新锐美妆品牌「花觉」完成天使轮融资后希望全面升级品牌视觉，目标用户为18-28岁年轻女性，竞品是完美日记·花西子，需要找到有差异化的视觉语言突围。',
+   steps:['品牌调研','竞品分析','概念提案×2轮','VI系统落地','全套物料延展'],
+   decisions:['极简东方美学+高饱和度珊瑚红，在简约中保留东方温度','无衬线主字体配合品牌手写字，理性与温度的视觉平衡','包装主张可降解材料，将环保品牌理念融入视觉设计语言'],
+   metrics:[{v:'破500万',l:'上线首月GMV'},{v:'3000万+',l:'媒体曝光次数'},{v:'94%',l:'品牌识别率'}]},
+  {emoji:'🎵',title:'音乐社区产品设计',tags:[{t:'UX',c:'tag-ux'},{t:'UI',c:'tag-design'}],
+   hl:[{t:'0→1产品设计',c:'mhl-ux'},{t:'用户研究',c:'mhl-research'},{t:'信息架构',c:'mhl-design'}],
+   bg:'创业团队希望打造独立音乐人创作分享社区，同时服务「创作者」和「听众」两类用户群，需从0到1完整输出产品设计，并在Pre-A融资路演前完成高保真原型。',
+   steps:['用研访谈×20人','信息架构设计','低保真原型','可用性测试','高保真UI交付'],
+   decisions:['「创作」与「发现」双主线导航，两类用户群各有完整的独立场景','AI配器推荐集成到歌词创作界面，降低独立音乐人制作门槛','社区Feed按「情绪」而非时间排序，增强内容与用户的情感共鸣'],
+   metrics:[{v:'Pre-A轮',l:'融资成功'},{v:'9.2/10',l:'投资人设计评分'},{v:'100%',l:'核心功能交付率'}]},
+  {emoji:'📊',title:'SaaS数据看板系统',tags:[{t:'UX',c:'tag-ux'},{t:'B端',c:'tag-branding'}],
+   hl:[{t:'数据可视化',c:'mhl-design'},{t:'B端设计',c:'mhl-ux'},{t:'复杂系统',c:'mhl-research'}],
+   bg:'企业级数据分析SaaS，用户为数据分析师和业务管理者，核心挑战是在极高信息密度下保持界面可读性，同时支持深度定制化的看板配置需求，两者之间存在严重张力。',
+   steps:['用户工作流分析','信息架构','低保真原型测试','高保真视觉','研发联调验收'],
+   decisions:['渐进式信息展示设计，默认隐藏高级配置，按需展开','「看板模式」和「分析模式」双视图一键切换，适配不同使用场景','统一颜色编码体系，数据状态（正常/预警/异常）一眼可辨'],
+   metrics:[{v:'4.7/5.0',l:'用户满意度'},{v:'-60%',l:'学习成本降低'},{v:'3×',l:'报表生成效率'}]},
+  {emoji:'📚',title:'微信读书核心模块改版',tags:[{t:'UI',c:'tag-design'},{t:'UX',c:'tag-ux'}],
+   hl:[{t:'超级应用改版',c:'mhl-ux'},{t:'AB测试驱动',c:'mhl-research'},{t:'设计系统',c:'mhl-design'}],
+   bg:'微信读书DAU超3000万，需从根本提升核心阅读体验和社交互动深度，同时要降低用户迁移成本，不能破坏既有阅读习惯，是一次兼顾体验提升与风险控制的全面改版。',
+   steps:['数据漏斗分析','用研+焦点小组','AB测试方案','视觉重设计','AB测试→全量'],
+   decisions:['新增双指滑动翻页+沉浸阅读模式，让读书体验更接近纸质书','书架重构为「想读/在读/读完」三视图，解决书架混乱的核心痛点','社交划线功能交互优化，好友共鸣内容一键可见，提升社交粘性'],
+   metrics:[{v:'+18分',l:'NPS净推荐值'},{v:'+35%',l:'设计交付效率'},{v:'+28%',l:'书架功能使用率'}]},
+  {emoji:'🎮',title:'手游完整UI设计方案',tags:[{t:'UI',c:'tag-design'},{t:'游戏',c:'tag-branding'}],
+   hl:[{t:'游戏UI',c:'mhl-design'},{t:'世界观设计',c:'mhl-ux'},{t:'模板系统',c:'mhl-research'}],
+   bg:'网易互娱旗下2款手游（ARPG+策略卡牌）从立项到上线全程UI支持，需在游戏世界观沉浸感与实际操作可用性之间找到最优平衡，同时兼顾iOS/Android双端差异适配。',
+   steps:['世界观深度分析','视觉风格定调','UI组件系统','HUD层级设计','双端适配+还原验收'],
+   decisions:['建立游戏主题色体系，让视觉语言统一世界观情绪基调','HUD信息优先级按「战斗使用频率」排序，减少关键时刻视线移动','活动页面建立模板系统，运营团队可自助出图，无需设计介入'],
+   metrics:[{v:'98%',l:'设计还原度'},{v:'准时',l:'双端上线交付'},{v:'+40%',l:'运营出图效率'}]}
+];
+
+function openModal(i){
+  const d=workData[i];
+  document.getElementById('modal-emoji').textContent=d.emoji;
+  document.getElementById('modal-title').textContent=d.title;
+  document.getElementById('modal-bg').textContent=d.bg;
+  document.getElementById('modal-tags').innerHTML=d.tags.map(t=>`<span class="modal-tag work-tag ${t.c}">${t.t}</span>`).join('');
+  document.getElementById('modal-highlights-row').innerHTML=`<div class="modal-highlights">${d.hl.map(h=>`<span class="modal-hl ${h.c}">${h.t}</span>`).join('')}</div>`;
+  document.getElementById('modal-steps').innerHTML=d.steps.map((s,i)=>`${i>0?'<span class="modal-step-arr">→</span>':''}<span class="modal-step">${s}</span>`).join('');
+  document.getElementById('modal-decisions').innerHTML=d.decisions.map(dec=>`<li>${dec}</li>`).join('');
+  document.getElementById('modal-metrics').innerHTML=d.metrics.map(m=>`<div class="modal-metric"><div class="modal-metric-val">${m.v}</div><div class="modal-metric-label">${m.l}</div></div>`).join('');
+  document.getElementById('work-modal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(!e||e.target.id==='work-modal'||e.currentTarget.classList.contains('modal-close')){
+    document.getElementById('work-modal').classList.remove('active');
+    document.body.style.overflow='';
+  }
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>

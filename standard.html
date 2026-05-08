@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>张伟 · 高级产品经理</title>
+  <style>
+    :root {
+      --bg: #0c1829;
+      --surface: #0f1f35;
+      --card: #152845;
+      --border: rgba(8,145,178,0.15);
+      --primary: #0891b2;
+      --accent: #6366f1;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(12,24,41,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { font-weight: 700; font-size: 1rem; color: var(--primary); letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(8,145,178,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 60%, rgba(99,102,241,0.05) 0%, transparent 70%),
+        var(--bg);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(8,145,178,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,145,178,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 720px; }
+    .hero-label {
+      display: inline-block;
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 5px 18px; font-size: 0.78rem; color: var(--primary);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 24px; background: rgba(8,145,178,0.06);
+    }
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.1; margin-bottom: 18px; letter-spacing: -0.02em;
+    }
+    .hero-title-wrap {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--muted); margin-bottom: 28px; min-height: 2.2em;
+    }
+    #hero-typewriter {
+      color: var(--primary); font-weight: 600;
+      border-right: 2px solid var(--primary); padding-right: 2px;
+    }
+    .hero-power {
+      font-size: 1rem; color: var(--text);
+      margin: 0 auto 36px; padding: 16px 24px;
+      background: rgba(8,145,178,0.07);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      text-align: left; max-width: 560px;
+    }
+    .hero-cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--primary); color: #fff; border: none;
+      padding: 12px 30px; border-radius: 8px; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .btn-primary:hover { background: #0ea5c9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(8,145,178,0.35); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(148,163,184,0.3);
+      padding: 12px 30px; border-radius: 8px; font-size: 0.95rem;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── Stats ── */
+    .stats-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .stats-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 24px; text-align: center;
+    }
+    .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 6px; }
+    .stat-suffix { font-size: 1rem; color: var(--accent); }
+    .stat-label { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    /* ── Section Commons ── */
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-num { font-size: 0.72rem; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .section-divider { width: 40px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent)); margin-bottom: 40px; border-radius: 2px; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .stagger .reveal:nth-child(1) { transition-delay: 0s; }
+    .stagger .reveal:nth-child(2) { transition-delay: 0.08s; }
+    .stagger .reveal:nth-child(3) { transition-delay: 0.16s; }
+    .stagger .reveal:nth-child(4) { transition-delay: 0.24s; }
+    .stagger .reveal:nth-child(5) { transition-delay: 0.32s; }
+    .stagger .reveal:nth-child(6) { transition-delay: 0.40s; }
+
+    /* ── Interact badge ── */
+    .interact-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.28);
+      color: var(--accent); padding: 5px 14px; border-radius: 999px;
+      font-size: 0.78rem; margin-bottom: 28px;
+    }
+    .ibdot {
+      width: 7px; height: 7px; background: var(--accent); border-radius: 50%;
+      animation: ibpulse 1.6s infinite;
+    }
+    @keyframes ibpulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.35; transform:scale(0.65); }
+    }
+
+    /* ── About ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .about-text p { color: var(--text); margin-bottom: 18px; line-height: 1.85; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .about-tag {
+      background: rgba(8,145,178,0.1); border: 1px solid rgba(8,145,178,0.25);
+      color: var(--primary); padding: 4px 14px; border-radius: 999px; font-size: 0.82rem;
+    }
+    .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+    .about-card-title { font-size: 0.72rem; color: var(--primary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; }
+    .about-list { list-style: none; }
+    .about-list li {
+      color: var(--text); font-size: 0.9rem; padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; justify-content: space-between; gap: 16px;
+    }
+    .about-list li:last-child { border-bottom: none; }
+    .about-list li span { color: var(--muted); text-align: right; }
+
+    /* ── Skills ── */
+    .skills-bg { background: var(--surface); }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 52px; }
+    .skill-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .skill-name { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+    .skill-pct { font-size: 0.85rem; color: var(--primary); font-weight: 600; }
+    .skill-track { height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+    .skill-bar {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%; transition: width 1.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* ── Projects ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .proj-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .proj-card:hover { border-color: rgba(8,145,178,0.4); transform: translateY(-3px); }
+    .proj-card.open { border-color: var(--primary); }
+    .proj-header { padding: 22px 22px 16px; }
+    .proj-tag { font-size: 0.72rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .proj-title { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 8px; line-height: 1.4; }
+    .proj-metric { font-size: 0.85rem; color: var(--primary); font-weight: 600; }
+    .proj-expand-btn {
+      padding: 11px 22px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.78rem; color: var(--muted);
+      display: flex; align-items: center; justify-content: space-between;
+      transition: color 0.2s;
+    }
+    .proj-card:hover .proj-expand-btn,
+    .proj-card.open .proj-expand-btn { color: var(--primary); }
+    .proj-arrow { transition: transform 0.3s; }
+    .proj-card.open .proj-arrow { transform: rotate(180deg); }
+    .proj-detail { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding: 0 22px; }
+    .proj-card.open .proj-detail { max-height: 280px; padding: 0 22px 20px; }
+    .proj-detail-inner { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px; }
+    .proj-dlabel { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; margin-top: 12px; }
+    .proj-dlabel:first-child { margin-top: 0; }
+    .proj-detail p, .proj-detail li { font-size: 0.85rem; color: var(--text); line-height: 1.7; }
+    .proj-detail ul { padding-left: 16px; }
+    .proj-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .proj-chip {
+      background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
+      color: var(--accent); padding: 2px 10px; border-radius: 4px; font-size: 0.75rem;
+    }
+
+    /* ── Experience ── */
+    .exp-item {
+      margin-bottom: 20px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .exp-item.open { border-color: rgba(8,145,178,0.4); }
+    .exp-main { padding: 24px 28px; }
+    .exp-top {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px; margin-bottom: 14px;
+    }
+    .exp-role { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+    .exp-co { font-size: 0.88rem; color: var(--primary); }
+    .exp-period { font-size: 0.82rem; color: var(--muted); white-space: nowrap; padding-top: 4px; }
+    .exp-bullets { list-style: none; }
+    .exp-bullets li {
+      font-size: 0.9rem; color: var(--text);
+      padding: 4px 0 4px 18px; position: relative; line-height: 1.65;
+    }
+    .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--primary); font-size: 0.7rem; top: 7px; }
+    .exp-toggle {
+      padding: 12px 28px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: var(--muted); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.2s, color 0.2s; user-select: none;
+    }
+    .exp-toggle:hover { background: rgba(8,145,178,0.05); color: var(--primary); }
+    .exp-item.open .exp-toggle { color: var(--primary); }
+    .exp-toggle-arrow { transition: transform 0.3s; }
+    .exp-item.open .exp-toggle-arrow { transform: rotate(180deg); }
+    .exp-extra { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .exp-item.open .exp-extra { max-height: 220px; }
+    .exp-extra-inner { padding: 16px 28px 22px; border-top: 1px solid rgba(255,255,255,0.04); }
+    .exp-extra-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .exp-extra-list { list-style: none; }
+    .exp-extra-list li {
+      font-size: 0.88rem; color: var(--text);
+      padding: 4px 0 4px 16px; position: relative;
+    }
+    .exp-extra-list li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-size: 1.4em; line-height: 1; top: 3px; }
+
+    /* ── Education ── */
+    .edu-bg { background: var(--surface); }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 26px 28px; }
+    .edu-school { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .edu-degree { font-size: 0.88rem; color: var(--primary); margin-bottom: 3px; }
+    .edu-period { font-size: 0.8rem; color: var(--muted); margin-bottom: 14px; }
+    .edu-note { font-size: 0.88rem; color: var(--text); line-height: 1.7; }
+
+    /* ── Awards ── */
+    .awards-list { display: flex; flex-direction: column; gap: 14px; }
+    .award-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 24px;
+      display: flex; align-items: center; gap: 18px;
+    }
+    .award-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .award-name { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .award-org { font-size: 0.82rem; color: var(--muted); }
+    .award-year { font-size: 0.82rem; color: var(--primary); margin-left: auto; flex-shrink: 0; }
+
+    /* ── Testimonials ── */
+    .testi-bg { background: var(--surface); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .testi-quote {
+      font-size: 0.9rem; color: var(--text); line-height: 1.75;
+      margin-bottom: 20px; font-style: italic;
+      position: relative; padding-left: 20px;
+    }
+    .testi-quote::before {
+      content: '"'; position: absolute; left: 0; top: -4px;
+      color: var(--primary); font-size: 2.2rem; font-style: normal; line-height: 1;
+    }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .testi-name { font-size: 0.88rem; font-weight: 600; color: var(--white); margin-bottom: 1px; }
+    .testi-pos { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── Contact ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .contact-text p { color: var(--text); margin-bottom: 16px; line-height: 1.85; }
+    .contact-items { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+    .contact-item { display: flex; align-items: center; gap: 12px; }
+    .contact-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: rgba(8,145,178,0.1); border: 1px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .contact-label { font-size: 0.78rem; color: var(--muted); }
+    .contact-val { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; }
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+    .form-input, .form-textarea {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(148,163,184,0.15); border-radius: 8px;
+      padding: 10px 14px; color: var(--text); font-size: 0.9rem; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--primary); }
+    .form-textarea { min-height: 88px; resize: vertical; }
+    .form-submit {
+      width: 100%; background: var(--primary); color: #fff;
+      border: none; padding: 12px; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: #0ea5c9; transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    footer { border-top: 1px solid var(--border); padding: 28px 24px; text-align: center; font-size: 0.82rem; color: var(--muted); }
+    footer a { color: var(--primary); text-decoration: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+      .about-grid, .contact-grid, .edu-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .exp-top { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-brand">张 伟</div>
+  <ul class="nav-links">
+    <li><a href="#about">关于我</a></li>
+    <li><a href="#skills">技能</a></li>
+    <li><a href="#projects">项目</a></li>
+    <li><a href="#experience">经历</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">5年产品经验 · 互联网资深PM</div>
+    <h1 class="hero-name">张 伟</h1>
+    <div class="hero-title-wrap">
+      <span style="color:var(--muted)">求职方向：</span><span id="hero-typewriter"></span>
+    </div>
+    <div class="hero-power">
+      过去 5 年，我主导设计的产品功能覆盖 <strong>8,000万+</strong> 用户，贡献 GMV 超过 <strong>20亿元</strong>，推动团队完成 <strong>50+</strong> 个版本迭代。
+    </div>
+    <div class="hero-cta-group">
+      <a href="#projects" class="btn-primary">查看代表项目</a>
+      <a href="#contact" class="btn-outline">联系我</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-strip">
+  <div class="stats-inner stagger" id="stats-wrap">
+    <div class="reveal">
+      <div class="stat-num"><span data-count="5">0</span><span class="stat-suffix">年</span></div>
+      <div class="stat-label">互联网产品经验</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num"><span data-count="20">0</span><span class="stat-suffix">亿+</span></div>
+      <div class="stat-label">负责 GMV 规模</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num"><span data-count="50">0</span><span class="stat-suffix">+</span></div>
+      <div class="stat-label">功能版本迭代</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num"><span data-count="37">0</span><span class="stat-suffix">%</span></div>
+      <div class="stat-label">用户满意度提升</div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 About -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-num">01 · ABOUT</div>
+    <h2 class="section-title">关于我</h2>
+    <div class="section-divider"></div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>我是张伟，5年互联网产品经理，专注于<strong>消费类 App 与 B端 SaaS 产品</strong>。现任职字节跳动，负责抖音电商核心功能设计与迭代。</p>
+        <p>擅长从用户痛点出发，以数据驱动决策，在复杂的跨团队协作中高效推动产品落地。有扎实的计算机技术背景，能与工程师深入沟通技术可行性。</p>
+        <p>加入字节前，我在有赞负责商家端 SaaS 产品，服务全国 50 万商家，积累了丰富的 B端产品设计经验。</p>
+        <div class="about-tags">
+          <span class="about-tag">消费电商</span>
+          <span class="about-tag">B端SaaS</span>
+          <span class="about-tag">数据驱动</span>
+          <span class="about-tag">用户增长</span>
+          <span class="about-tag">跨团队协作</span>
+        </div>
+      </div>
+      <div class="about-card reveal">
+        <div class="about-card-title">基本信息</div>
+        <ul class="about-list">
+          <li>现任公司 <span>字节跳动</span></li>
+          <li>当前职级 <span>高级产品经理 P7</span></li>
+          <li>所在城市 <span>上海</span></li>
+          <li>求职状态 <span style="color:#10b981">积极求职中</span></li>
+          <li>目标城市 <span>上海 / 北京 / 杭州</span></li>
+          <li>期望薪资 <span>面议</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Skills -->
+<section class="section skills-bg" id="skills">
+  <div class="section-inner">
+    <div class="section-num">02 · SKILLS</div>
+    <h2 class="section-title">核心技能</h2>
+    <div class="section-divider"></div>
+    <div class="interact-badge"><span class="ibdot"></span>滚动至此 · 自动加载技能评分</div>
+    <div class="skills-grid stagger" id="skills-grid">
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">产品规划 &amp; 路线图</span><span class="skill-pct">95%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="95"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">PRD 撰写 &amp; 需求管理</span><span class="skill-pct">92%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="92"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">用户研究 &amp; 访谈</span><span class="skill-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="90"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">项目管理 &amp; 跨团队推进</span><span class="skill-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="88"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">数据分析 &amp; 指标体系</span><span class="skill-pct">85%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="85"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">竞品分析 &amp; 市场洞察</span><span class="skill-pct">87%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="87"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">A/B 测试 &amp; 实验设计</span><span class="skill-pct">82%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="82"></div></div>
+      </div>
+      <div class="skill-item reveal">
+        <div class="skill-header"><span class="skill-name">原型设计（Axure / Figma）</span><span class="skill-pct">80%</span></div>
+        <div class="skill-track"><div class="skill-bar" data-width="80"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Projects -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <div class="section-num">03 · PROJECTS</div>
+    <h2 class="section-title">代表项目</h2>
+    <div class="section-divider"></div>
+    <div class="interact-badge"><span class="ibdot"></span>点击卡片 · 展开项目详情</div>
+    <div class="projects-grid stagger">
+      <div class="proj-card reveal" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <div class="proj-tag">电商 · 用户增长</div>
+          <div class="proj-title">抖音电商购物车全面改版</div>
+          <div class="proj-metric">MAU +35% · 转化率 +18%</div>
+        </div>
+        <div class="proj-expand-btn"><span>展开详情</span><span class="proj-arrow">▾</span></div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="proj-dlabel">项目背景</div>
+            <p>旧版购物车操作路径冗长，结算流程断点多，用户放弃率达42%。</p>
+            <div class="proj-dlabel">我的工作</div>
+            <ul><li>主导全链路用户调研（访谈30人 + 问卷2,000份）</li><li>重新设计交互流程，减少结算步骤3步</li><li>设计AB实验方案，上线后MAU提升35%</li></ul>
+            <div class="proj-chips"><span class="proj-chip">用户研究</span><span class="proj-chip">A/B测试</span><span class="proj-chip">漏斗分析</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <div class="proj-tag">直播电商 · 工具</div>
+          <div class="proj-title">直播带货工具矩阵</div>
+          <div class="proj-metric">季度 GMV +2亿 · 主播留存 +29%</div>
+        </div>
+        <div class="proj-expand-btn"><span>展开详情</span><span class="proj-arrow">▾</span></div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="proj-dlabel">项目背景</div>
+            <p>直播工具分散，主播运营效率低，缺乏统一的数据管理入口。</p>
+            <div class="proj-dlabel">我的工作</div>
+            <ul><li>整合选品、上链接、数据看板三条功能线</li><li>设计"一键挂载"快捷操作，操作时长缩短60%</li><li>搭建主播侧激励体系，提升DAU活跃度</li></ul>
+            <div class="proj-chips"><span class="proj-chip">工具产品</span><span class="proj-chip">功能整合</span><span class="proj-chip">留存优化</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <div class="proj-tag">SaaS · 商家端</div>
+          <div class="proj-title">有赞商城小程序</div>
+          <div class="proj-metric">月活 300万 · NPS 82</div>
+        </div>
+        <div class="proj-expand-btn"><span>展开详情</span><span class="proj-arrow">▾</span></div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="proj-dlabel">项目背景</div>
+            <p>商家端功能杂乱，初级商家上手难，早期流失率偏高。</p>
+            <div class="proj-dlabel">我的工作</div>
+            <ul><li>重构商家后台信息架构，降低新手学习成本</li><li>主导"智能引导"功能，首周留存率+23%</li><li>带领团队完成4个季度连续版本迭代</li></ul>
+            <div class="proj-chips"><span class="proj-chip">B端SaaS</span><span class="proj-chip">信息架构</span><span class="proj-chip">用户引导</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <div class="proj-tag">数据产品 · B端</div>
+          <div class="proj-title">智能报表中心</div>
+          <div class="proj-metric">NPS +28分 · 使用频次 +3.2倍</div>
+        </div>
+        <div class="proj-expand-btn"><span>展开详情</span><span class="proj-arrow">▾</span></div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="proj-dlabel">项目背景</div>
+            <p>商家依赖导出Excel分析数据，实时性差，决策严重滞后。</p>
+            <div class="proj-dlabel">我的工作</div>
+            <ul><li>设计可视化报表组件，支持自定义拖拽布局</li><li>推动算法团队接入智能预测模块</li><li>上线后NPS提升28分，达行业标杆水平</li></ul>
+            <div class="proj-chips"><span class="proj-chip">数据可视化</span><span class="proj-chip">智能分析</span><span class="proj-chip">NPS提升</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <div class="proj-tag">增长 · 实验体系</div>
+          <div class="proj-title">用户增长实验平台</div>
+          <div class="proj-metric">注册转化 +22% · 月实验量 200+</div>
+        </div>
+        <div class="proj-expand-btn"><span>展开详情</span><span class="proj-arrow">▾</span></div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="proj-dlabel">项目背景</div>
+            <p>增长实验全靠工程师手动配置，效率低，数据分析不规范。</p>
+            <div class="proj-dlabel">我的工作</div>
+            <ul><li>设计自助AB实验配置平台，PM可独立发起实验</li><li>搭建标准化报告体系，误差率降低60%</li><li>月均实验量从20增至200+，注册转化提升22%</li></ul>
+            <div class="proj-chips"><span class="proj-chip">增长黑客</span><span class="proj-chip">A/B平台</span><span class="proj-chip">指标体系</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <div class="proj-tag">算法 · 推荐系统</div>
+          <div class="proj-title">内容电商推荐策略</div>
+          <div class="proj-metric">CTR +41% · 人均时长 +28%</div>
+        </div>
+        <div class="proj-expand-btn"><span>展开详情</span><span class="proj-arrow">▾</span></div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="proj-dlabel">项目背景</div>
+            <p>内容与商品推荐割裂，用户从内容到购买的转化路径断裂，CTR偏低。</p>
+            <div class="proj-dlabel">我的工作</div>
+            <ul><li>定义"内容-商品"联合推荐的产品规格</li><li>协调算法团队完成向量融合方案</li><li>上线后CTR提升41%，人均内容消费时长+28%</li></ul>
+            <div class="proj-chips"><span class="proj-chip">推荐系统</span><span class="proj-chip">算法协作</span><span class="proj-chip">转化优化</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Experience -->
+<section class="section" id="experience">
+  <div class="section-inner">
+    <div class="section-num">04 · EXPERIENCE</div>
+    <h2 class="section-title">工作经历</h2>
+    <div class="section-divider"></div>
+    <div class="interact-badge"><span class="ibdot"></span>点击展开 · 查看完整工作亮点</div>
+    <div class="exp-item reveal" id="exp-0">
+      <div class="exp-main">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">高级产品经理</div>
+            <div class="exp-co">字节跳动 · 抖音电商事业部</div>
+          </div>
+          <div class="exp-period">2021 — 至今</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>负责抖音电商核心链路（购物车→结算→支付）的产品设计与迭代</li>
+          <li>主导购物车全面改版，MAU提升35%，支付转化率+18%</li>
+          <li>统筹直播带货工具矩阵，季度GMV贡献突破2亿元</li>
+        </ul>
+      </div>
+      <div class="exp-toggle" onclick="toggleExp('exp-0')">
+        <span>查看更多工作亮点</span><span class="exp-toggle-arrow">▾</span>
+      </div>
+      <div class="exp-extra">
+        <div class="exp-extra-inner">
+          <div class="exp-extra-label">更多成绩</div>
+          <ul class="exp-extra-list">
+            <li>建立电商AB实验规范体系，月均实验量从8个提升至60个</li>
+            <li>推动内容-商品推荐策略落地，CTR整体提升41%</li>
+            <li>辅导3名P5/P6产品经理成长，积累带教经验</li>
+            <li>荣获2022年度"优秀产品经理"，全事业部Top 5%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="exp-item reveal" id="exp-1">
+      <div class="exp-main">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">产品经理</div>
+            <div class="exp-co">有赞 · 商家产品部</div>
+          </div>
+          <div class="exp-period">2018 — 2021</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>独立负责有赞商城小程序产品线，月活用户300万，服务50万商家</li>
+          <li>主导智能报表功能，上线后商家NPS提升28分</li>
+          <li>完成4个季度产品版本迭代，按时交付率100%</li>
+        </ul>
+      </div>
+      <div class="exp-toggle" onclick="toggleExp('exp-1')">
+        <span>查看更多工作亮点</span><span class="exp-toggle-arrow">▾</span>
+      </div>
+      <div class="exp-extra">
+        <div class="exp-extra-inner">
+          <div class="exp-extra-label">更多成绩</div>
+          <ul class="exp-extra-list">
+            <li>从0搭建商家引导体系，新商家7日留存率提升23%</li>
+            <li>主导B端API开放平台规格制定，接入200+ ISV合作伙伴</li>
+            <li>荣获2020年度"最佳产品奖"，智能报表项目获奖</li>
+            <li>参与公司产品组年度OKR制定与拆解</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Education -->
+<section class="section edu-bg" id="education">
+  <div class="section-inner">
+    <div class="section-num">05 · EDUCATION</div>
+    <h2 class="section-title">教育背景</h2>
+    <div class="section-divider"></div>
+    <div class="edu-grid stagger">
+      <div class="edu-card reveal">
+        <div class="edu-school">上海交通大学</div>
+        <div class="edu-degree">计算机科学与技术 · 工学学士</div>
+        <div class="edu-period">2014 — 2018</div>
+        <div class="edu-note">主修数据结构、算法、数据库与软件工程。扎实技术背景让我能与工程师深入沟通，快速判断技术方案可行性，有效减少需求返工。</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-school">专业认证</div>
+        <div class="edu-degree">&nbsp;</div>
+        <div class="edu-period">&nbsp;</div>
+        <div class="edu-note">
+          · PMP 项目管理专业人士认证（PMI，2020）<br>
+          · 腾讯增长黑客认证（2021）<br>
+          · Google Analytics 个人认证（2022）<br>
+          · 字节跳动内部数据分析黑带认证（2023）
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Awards -->
+<section class="section" id="awards">
+  <div class="section-inner">
+    <div class="section-num">06 · AWARDS</div>
+    <h2 class="section-title">荣誉奖项</h2>
+    <div class="section-divider"></div>
+    <div class="awards-list stagger">
+      <div class="award-item reveal">
+        <div class="award-icon">🏆</div>
+        <div>
+          <div class="award-name">年度优秀产品经理</div>
+          <div class="award-org">字节跳动 · 抖音电商事业部 · 全员评选 Top 5%</div>
+        </div>
+        <div class="award-year">2022</div>
+      </div>
+      <div class="award-item reveal">
+        <div class="award-icon">🎖️</div>
+        <div>
+          <div class="award-name">中国互联网产品经理年会 · 新锐PM</div>
+          <div class="award-org">全国互联网PM大会 · 入选全国100人榜单</div>
+        </div>
+        <div class="award-year">2023</div>
+      </div>
+      <div class="award-item reveal">
+        <div class="award-icon">⭐</div>
+        <div>
+          <div class="award-name">年度最佳产品奖 · 最佳B端功能</div>
+          <div class="award-org">有赞 · 年度产品评选 · 智能报表项目获奖</div>
+        </div>
+        <div class="award-year">2020</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 Testimonials -->
+<section class="section testi-bg" id="testimonials">
+  <div class="section-inner">
+    <div class="section-num">07 · TESTIMONIALS</div>
+    <h2 class="section-title">同事评价</h2>
+    <div class="section-divider"></div>
+    <div class="testi-grid stagger">
+      <div class="testi-card reveal">
+        <div class="testi-quote">张伟是我见过逻辑最清晰的 PM 之一。他写的 PRD 让工程师第一遍看就能开发，不用反复对齐需求，这在大团队里太难得了。</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#0891b2,#6366f1)">刘</div>
+          <div>
+            <div class="testi-name">刘 磊</div>
+            <div class="testi-pos">字节跳动 · 高级前端工程师</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-quote">在增长实验项目上，张伟展现出的数据敏感度和迭代速度让我印象深刻。他不只是写需求，而是真正懂增长逻辑的产品人。</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">陈</div>
+          <div>
+            <div class="testi-name">陈 思远</div>
+            <div class="testi-pos">字节跳动 · 产品总监</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-quote">跟张伟合作做商城小程序那两年，他有一种能让跨团队资源都愿意配合他的能力，项目总是能准时上线，这真的很难得。</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#10b981,#0891b2)">王</div>
+          <div>
+            <div class="testi-name">王 志强</div>
+            <div class="testi-pos">有赞 · 研发负责人</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 Contact -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <div class="section-num">08 · CONTACT</div>
+    <h2 class="section-title">联系我</h2>
+    <div class="section-divider"></div>
+    <div class="contact-grid">
+      <div class="contact-text reveal">
+        <p>我目前处于<strong>积极求职</strong>状态，对高级产品经理、产品负责人方向的机会均感兴趣。</p>
+        <p>如果你的团队正在寻找一个既懂用户洞察、又能数据驱动决策、还能高效推动多方落地的产品经理，欢迎随时联系。</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-label">邮箱</div>
+              <div class="contact-val">zhangwei@example.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div>
+              <div class="contact-label">微信</div>
+              <div class="contact-val">zhangwei_pm</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🏙️</div>
+            <div>
+              <div class="contact-label">所在地</div>
+              <div class="contact-val">上海 · 可接受出差</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-group">
+          <label class="form-label">您的姓名</label>
+          <input class="form-input" type="text" placeholder="请输入您的姓名">
+        </div>
+        <div class="form-group">
+          <label class="form-label">联系方式</label>
+          <input class="form-input" type="text" placeholder="邮箱或微信号">
+        </div>
+        <div class="form-group">
+          <label class="form-label">留言内容</label>
+          <textarea class="form-textarea" placeholder="您好，我想了解更多关于您的产品经验..."></textarea>
+        </div>
+        <button class="form-submit">发送消息</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>张伟 · 高级产品经理 · © 2026 &nbsp;|&nbsp; 由 <a href="#">职灵AI</a> 定制</p>
+</footer>
+
+<script>
+  /* Typewriter */
+  const titles = ['高级产品经理', '产品负责人', '增长产品专家', '电商产品经理'];
+  let ti = 0, ci = 0, deleting = false;
+  const tw = document.getElementById('hero-typewriter');
+  function typeLoop() {
+    const cur = titles[ti];
+    if (!deleting) {
+      tw.textContent = cur.slice(0, ci + 1); ci++;
+      if (ci === cur.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
+    } else {
+      tw.textContent = cur.slice(0, ci - 1); ci--;
+      if (ci === 0) { deleting = false; ti = (ti + 1) % titles.length; }
+    }
+    setTimeout(typeLoop, deleting ? 55 : 95);
+  }
+  typeLoop();
+
+  /* Counter */
+  function animateCounter(el, target) {
+    const step = target / (1500 / 16); let cur = 0;
+    const t = setInterval(() => {
+      cur += step;
+      if (cur >= target) { el.textContent = target; clearInterval(t); }
+      else { el.textContent = Math.floor(cur); }
+    }, 16);
+  }
+
+  /* Reveal + counter trigger */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        const c = e.target.querySelector('[data-count]');
+        if (c) animateCounter(c, parseInt(c.getAttribute('data-count')));
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* Skill bars */
+  const barObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-bar').forEach(b => {
+          setTimeout(() => { b.style.width = b.getAttribute('data-width') + '%'; }, 150);
+        });
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  const sg = document.getElementById('skills-grid');
+  if (sg) barObs.observe(sg);
+
+  /* Project toggle */
+  function toggleProject(card) { card.classList.toggle('open'); }
+
+  /* Experience toggle */
+  function toggleExp(id) { document.getElementById(id).classList.toggle('open'); }
+</script>
+</body>
+</html>

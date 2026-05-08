@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李明 · 高级财务分析师</title>
+<style>
+:root{--primary:#1d4ed8;--primary2:#3b82f6;--accent:#0891b2;--text:#0f172a;--muted:#64748b;--bg:#f0f4ff;--white:#ffffff;--border:#e2e8f0;--gold:#b45309}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-name{font-weight:800;font-size:16px;color:var(--primary)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:14px;transition:color 0.2s}
+.nav-links a:hover{color:var(--primary)}
+.nav-cta{background:var(--primary);color:white!important;padding:6px 18px;border-radius:8px;font-weight:600!important;font-size:13px!important}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1d4ed8 0%,#0891b2 100%);padding:88px 48px 72px;display:grid;grid-template-columns:1fr 140px;gap:40px;align-items:center;margin-top:60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.hero::after{content:'';position:absolute;left:40%;bottom:-80px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.hero-text{position:relative;z-index:1;animation:slideIn 0.7s ease both}
+@keyframes slideIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);padding:4px 14px;border-radius:50px;font-size:12px;color:rgba(255,255,255,0.9);margin-bottom:18px}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.hero h1{font-size:46px;font-weight:900;color:white;letter-spacing:-1.5px;margin-bottom:6px}
+.hero-title{font-size:16px;color:rgba(255,255,255,0.85);margin-bottom:16px;font-weight:500}
+.hero-quote{font-size:14px;color:rgba(255,255,255,0.72);line-height:1.8;margin-bottom:22px;border-left:2px solid rgba(255,255,255,0.35);padding-left:14px;max-width:460px;font-style:italic}
+.hero-contacts{display:flex;gap:8px;flex-wrap:wrap}
+.hero-contact{font-size:12px;color:rgba(255,255,255,0.88);background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.22);padding:4px 13px;border-radius:50px}
+.hero-avatar{width:120px;height:120px;border-radius:20px;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:52px;flex-shrink:0;position:relative;z-index:1;animation:fadeIn 0.7s ease 0.2s both}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+
+/* STATS STRIP */
+.stats-strip{background:var(--white);border-bottom:1px solid var(--border)}
+.stats-inner{max-width:840px;margin:0 auto;padding:36px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.stat-item .n{font-size:34px;font-weight:900;color:var(--primary);line-height:1}
+.stat-item .l{font-size:12px;color:var(--muted);margin-top:5px}
+.stat-item .i{font-size:18px;margin-bottom:6px}
+
+/* SECTIONS */
+.section{padding:80px 20px}
+.section-inner{max-width:840px;margin:0 auto}
+.section-label{font-size:11px;letter-spacing:3px;color:var(--primary);text-transform:uppercase;font-weight:700;margin-bottom:10px}
+.section-title{font-size:30px;font-weight:800;color:var(--text);margin-bottom:44px;letter-spacing:-0.5px}
+.section-title span{color:var(--primary2)}
+.section-alt{background:var(--white)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start}
+.about-text p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:16px}
+.about-quote-block{border-left:3px solid var(--primary2);padding:10px 16px;background:#eff6ff;border-radius:0 8px 8px 0;margin-bottom:20px}
+.about-quote-block p{font-size:14px;color:var(--primary);font-weight:500;font-style:italic;margin:0;line-height:1.7}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px}
+.about-tag{font-size:12px;padding:4px 12px;border-radius:50px;background:#eff6ff;color:var(--primary);border:1px solid #bfdbfe}
+.info-card{background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--border)}
+.info-card-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.info-row:last-child{border-bottom:none}
+.info-key{color:var(--muted)}
+.info-val{font-weight:700;color:var(--text)}
+
+/* SKILLS WITH TABS — the ONE interaction */
+.interact-hint{display:inline-flex;align-items:center;gap:6px;background:#eff6ff;border:1px solid #bfdbfe;color:var(--primary);font-size:12px;font-weight:600;padding:5px 14px;border-radius:50px;margin-bottom:24px}
+.interact-hint .idot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.tabs-row{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.tab-btn{padding:8px 22px;border-radius:50px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit}
+.tab-btn.active{background:var(--primary);color:white;border-color:var(--primary);box-shadow:0 4px 16px rgba(29,78,216,0.25)}
+.tab-btn:hover:not(.active){border-color:var(--primary);color:var(--primary);background:white}
+.skill-group{flex-wrap:wrap;gap:10px;display:none;animation:groupIn 0.3s ease}
+.skill-group.show{display:flex}
+@keyframes groupIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.skill-chip{padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;border:1.5px solid;transition:all 0.2s}
+.skill-chip:hover{transform:translateY(-2px)}
+.chip-finance{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+.chip-data{background:#ecfeff;color:#0e7490;border-color:#a5f3fc}
+.chip-manage{background:#fdf4ff;color:#7e22ce;border-color:#e9d5ff}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.project-card{background:var(--white);border-radius:16px;border:1px solid var(--border);overflow:hidden;transition:all 0.3s;position:relative}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(29,78,216,0.1);border-color:#bfdbfe}
+.project-header{padding:24px}
+.project-icon-wrap{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.project-name{font-size:15px;font-weight:700;margin-bottom:8px}
+.project-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.project-metric{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s;background:#eff6ff;border-top:0px solid var(--border)}
+.project-card:hover .project-metric{max-height:64px;padding:12px 24px;border-top:1px solid #bfdbfe}
+.metric-text{font-size:13px;font-weight:700;color:var(--primary)}
+.metric-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* EXPERIENCE */
+.exp-timeline{position:relative;padding-left:36px}
+.exp-timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--primary),var(--accent),transparent)}
+.exp-item{background:var(--white);border-radius:16px;padding:24px 28px;margin-bottom:16px;position:relative;border:1px solid var(--border);transition:border-color 0.3s}
+.exp-item:hover{border-color:#bfdbfe;box-shadow:0 4px 20px rgba(29,78,216,0.06)}
+.exp-item::before{content:'';position:absolute;left:-30px;top:26px;width:12px;height:12px;border-radius:50%;background:var(--primary);border:2px solid var(--bg)}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;flex-wrap:wrap;gap:8px}
+.exp-company{font-weight:800;font-size:16px}
+.exp-period{font-size:12px;background:#eff6ff;color:var(--primary);padding:3px 12px;border-radius:50px;font-weight:600}
+.exp-role{font-size:13px;color:var(--accent);margin-bottom:12px;font-weight:500}
+.exp-list{list-style:none}
+.exp-list li{font-size:14px;color:var(--muted);padding:3px 0 3px 16px;position:relative;line-height:1.7}
+.exp-list li::before{content:'▸';position:absolute;left:0;color:var(--primary);font-size:11px;top:6px}
+.exp-list li strong{color:var(--text)}
+
+/* EDUCATION + CERTS */
+.edu-cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.edu-card{background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--border);display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;transition:border-color 0.3s}
+.edu-card:hover{border-color:#bfdbfe}
+.edu-icon{width:52px;height:52px;border-radius:12px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.edu-school{font-weight:800;font-size:15px;margin-bottom:3px}
+.edu-degree{font-size:13px;color:var(--primary);font-weight:600;margin-bottom:3px}
+.edu-year{font-size:12px;color:var(--muted)}
+.cert-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.cert-cards{display:flex;flex-direction:column;gap:12px}
+.cert-card{background:var(--white);border-radius:14px;padding:18px 20px;border:1.5px solid;display:flex;align-items:center;gap:16px;transition:transform 0.2s}
+.cert-card:hover{transform:translateX(4px)}
+.cert-card.gold-card{border-color:#fbbf24;background:linear-gradient(135deg,#fffbeb,#fff7ed)}
+.cert-card.blue-card{border-color:#60a5fa;background:linear-gradient(135deg,#eff6ff,#f0f9ff)}
+.cert-icon{font-size:28px;flex-shrink:0}
+.cert-name{font-size:14px;font-weight:800;margin-bottom:2px}
+.cert-name.gold-text{color:var(--gold)}
+.cert-name.blue-text{color:var(--primary)}
+.cert-org{font-size:12px;color:var(--muted)}
+
+/* CONTACT */
+.contact-section{background:linear-gradient(135deg,#eff6ff 0%,#f0fdf4 100%)}
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:480px;margin:0 auto 32px}
+.contact-card{background:var(--white);border-radius:14px;padding:22px;text-align:center;border:1px solid var(--border);transition:all 0.2s}
+.contact-card:hover{box-shadow:0 6px 24px rgba(29,78,216,0.1);border-color:#bfdbfe;transform:translateY(-2px)}
+.contact-icon-w{font-size:26px;margin-bottom:7px}
+.contact-lbl{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.contact-v{font-size:14px;font-weight:600;color:var(--text)}
+.contact-cta{text-align:center}
+.contact-cta p{color:var(--muted);margin-bottom:18px;font-size:15px}
+.btn-contact{display:inline-block;background:var(--primary);color:white;padding:13px 36px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;transition:all 0.2s;box-shadow:0 4px 16px rgba(29,78,216,0.25)}
+.btn-contact:hover{background:#1e40af;transform:translateY(-2px);box-shadow:0 8px 28px rgba(29,78,216,0.3)}
+footer{text-align:center;padding:28px;background:var(--white);border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{gap:14px}.hero{grid-template-columns:1fr;padding:72px 20px 56px}.hero-avatar{display:none}
+  .about-grid,.edu-cert-grid{grid-template-columns:1fr}.stats-inner{grid-template-columns:repeat(2,1fr)}.projects-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">李 明</div>
+  <div class="nav-links">
+    <a href="#about">关于</a>
+    <a href="#skills">技能</a>
+    <a href="#projects">项目</a>
+    <a href="#experience">经历</a>
+    <a href="#contact" class="nav-cta">联系我</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-badge"><span class="dot"></span>积极求职中 · 北京 / 上海</div>
+    <h1>李 明</h1>
+    <div class="hero-title">高级财务分析师 · 德勤咨询</div>
+    <div class="hero-quote">「6年只做一件事：让财务数字真正驱动业务决策。」</div>
+    <div class="hero-contacts">
+      <span class="hero-contact">📧 liming@finance.com</span>
+      <span class="hero-contact">📱 138-xxxx-xxxx</span>
+      <span class="hero-contact">📍 北京</span>
+      <span class="hero-contact">🏆 CPA · CMA</span>
+    </div>
+  </div>
+  <div class="hero-avatar">👨‍💼</div>
+</div>
+
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="i">📅</div><div class="n">6+</div><div class="l">年从业经验</div></div>
+    <div class="stat-item"><div class="i">💰</div><div class="n">10亿+</div><div class="l">管理预算规模</div></div>
+    <div class="stat-item"><div class="i">📉</div><div class="n">800万</div><div class="l">累计节省成本</div></div>
+    <div class="stat-item"><div class="i">🎓</div><div class="n">2项</div><div class="l">国际专业认证</div></div>
+  </div>
+</div>
+
+<!-- ABOUT 01 -->
+<div class="section" id="about">
+  <div class="section-inner">
+    <div class="section-label">01 · About</div>
+    <div class="section-title">关于<span>我</span></div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <div class="about-quote-block"><p>「数字不会说谎，但只有懂得业务的人才能让它开口。」</p></div>
+        <p>你好，我是李明，毕业于中国人民大学财务管理专业，持有注册会计师（CPA）和美国管理会计师（CMA）双认证，在德勤咨询与平安银行积累了6年以上的财务分析与管理实战经验。</p>
+        <p>擅长财务建模、成本管控与预算管理，曾主导集团成本优化项目年化节省超800万元；全程参与企业IPO财务准备工作，协助公司成功登陆科创板。目前寻求CFO助理或财务总监等管理职位。</p>
+        <div class="about-tags">
+          <span class="about-tag">📍 北京</span>
+          <span class="about-tag">🎓 中国人民大学</span>
+          <span class="about-tag">💼 积极求职中</span>
+          <span class="about-tag">🏆 CPA · CMA</span>
+          <span class="about-tag">🏢 德勤 · 平安银行</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">基本信息</div>
+        <div class="info-row"><span class="info-key">目标岗位</span><span class="info-val">CFO助理 / 财务总监</span></div>
+        <div class="info-row"><span class="info-key">期望城市</span><span class="info-val">北京 / 上海</span></div>
+        <div class="info-row"><span class="info-key">工作年限</span><span class="info-val">6年+</span></div>
+        <div class="info-row"><span class="info-key">专业认证</span><span class="info-val">CPA · CMA</span></div>
+        <div class="info-row"><span class="info-key">最高学历</span><span class="info-val">本科 · 中国人民大学</span></div>
+        <div class="info-row"><span class="info-key">现就职于</span><span class="info-val">德勤咨询</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS 02 -->
+<div class="section section-alt" id="skills">
+  <div class="section-inner">
+    <div class="section-label">02 · Skills</div>
+    <div class="section-title">专业<span>技能</span></div>
+    <div class="reveal">
+      <div class="interact-hint"><span class="idot"></span>点击分类标签切换技能</div>
+      <div class="tabs-row">
+        <button class="tab-btn active" onclick="showSkills('finance', this)">💼 金融专业</button>
+        <button class="tab-btn" onclick="showSkills('data', this)">📊 数据工具</button>
+        <button class="tab-btn" onclick="showSkills('manage', this)">🎯 职业素养</button>
+      </div>
+      <div id="skills-finance" class="skill-group show">
+        <span class="skill-chip chip-finance">财务建模</span>
+        <span class="skill-chip chip-finance">成本管控</span>
+        <span class="skill-chip chip-finance">预算管理</span>
+        <span class="skill-chip chip-finance">财务分析</span>
+        <span class="skill-chip chip-finance">IPO财务准备</span>
+        <span class="skill-chip chip-finance">税务筹划</span>
+        <span class="skill-chip chip-finance">内部控制</span>
+        <span class="skill-chip chip-finance">风险管理</span>
+        <span class="skill-chip chip-finance">审计配合</span>
+      </div>
+      <div id="skills-data" class="skill-group">
+        <span class="skill-chip chip-data">Excel · VBA 高级</span>
+        <span class="skill-chip chip-data">Power BI</span>
+        <span class="skill-chip chip-data">SAP FI/CO</span>
+        <span class="skill-chip chip-data">Oracle EBS</span>
+        <span class="skill-chip chip-data">Python 数据分析</span>
+        <span class="skill-chip chip-data">SQL</span>
+        <span class="skill-chip chip-data">Tableau</span>
+      </div>
+      <div id="skills-manage" class="skill-group">
+        <span class="skill-chip chip-manage">团队管理</span>
+        <span class="skill-chip chip-manage">跨部门协作</span>
+        <span class="skill-chip chip-manage">战略分析</span>
+        <span class="skill-chip chip-manage">项目管理</span>
+        <span class="skill-chip chip-manage">高管汇报</span>
+        <span class="skill-chip chip-manage">商务谈判</span>
+        <span class="skill-chip chip-manage">流程再造</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS 03 -->
+<div class="section" id="projects">
+  <div class="section-inner">
+    <div class="section-label">03 · Projects</div>
+    <div class="section-title">代表<span>项目</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:24px;margin-top:-32px">鼠标悬停卡片可查看核心成果</p>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon-wrap" style="background:#eff6ff">📉</div>
+          <div class="project-name">集团成本管控优化</div>
+          <div class="project-desc">主导集团各业务单元成本结构分析，识别低效支出，建立成本管控标准体系，推动全集团成本意识转变。</div>
+        </div>
+        <div class="project-metric">
+          <div class="metric-text">💰 年化节省成本 800万元</div>
+          <div class="metric-sub">覆盖5个业务单元 · 12个月完成</div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon-wrap" style="background:#f0fdf4">📈</div>
+          <div class="project-name">IPO财务准备全程支持</div>
+          <div class="project-desc">全程参与公司科创板IPO财务合规工作，完成历史财务数据整理、审计配合及信息披露文件撰写。</div>
+        </div>
+        <div class="project-metric">
+          <div class="metric-text">🚀 成功登陆科创板</div>
+          <div class="metric-sub">历时18个月 · 零重大审计意见</div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon-wrap" style="background:#ecfeff">📊</div>
+          <div class="project-name">Power BI 财务决策看板</div>
+          <div class="project-desc">从零设计并搭建集团财务数据看板系统，整合SAP、Oracle多源数据，实现实时财务数据可视化。</div>
+        </div>
+        <div class="project-metric">
+          <div class="metric-text">⚡ 管理层决策效率提升 60%</div>
+          <div class="metric-sub">覆盖7大财务维度 · 日更新</div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon-wrap" style="background:#fdf4ff">🔍</div>
+          <div class="project-name">德勤年度审计配合项目</div>
+          <div class="project-desc">作为集团财务对接人，统筹协调德勤年度审计工作，建立审计资料管理流程，大幅提升配合效率。</div>
+        </div>
+        <div class="project-metric">
+          <div class="metric-text">✅ 连续3年零重大审计发现</div>
+          <div class="metric-sub">配合效率提升40% · 年均节省审计费10%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE 04 -->
+<div class="section section-alt" id="experience">
+  <div class="section-inner">
+    <div class="section-label">04 · Experience</div>
+    <div class="section-title">工作<span>经历</span></div>
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-top"><div class="exp-company">德勤咨询 Deloitte</div><span class="exp-period">2021.03 — 至今</span></div>
+        <div class="exp-role">高级财务顾问 · 财务管理咨询部</div>
+        <ul class="exp-list">
+          <li>为10+家大型企业提供财务管理咨询，涵盖成本管控、预算管理和财务信息化</li>
+          <li>主导集团成本优化项目，识别关键低效支出节点，年化节省成本<strong>超800万元</strong></li>
+          <li>参与多个IPO项目财务准备，完成历史数据整理、审计协调和信披文件撰写</li>
+          <li>搭建Power BI财务看板系统，管理层<strong>决策效率提升60%</strong></li>
+          <li>指导2名初级顾问的业务成长，均在12个月内晋升</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-top"><div class="exp-company">平安银行</div><span class="exp-period">2018.07 — 2021.02</span></div>
+        <div class="exp-role">高级财务分析师 · 财务管理部</div>
+        <ul class="exp-list">
+          <li>负责银行零售事业部<strong>年度预算10亿+</strong>的编制、执行跟踪与差异分析</li>
+          <li>建立月度财务分析报告体系，报告周期从5天缩短至<strong>2天</strong></li>
+          <li>主导财务系统升级迁移项目，完成SAP与Oracle双系统数据整合</li>
+          <li>连续3年绩效评定A，荣获<strong>2020年度优秀员工</strong>称号</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION & CERTS 05 -->
+<div class="section" id="education">
+  <div class="section-inner">
+    <div class="section-label">05 · Education & Certifications</div>
+    <div class="section-title">教育与<span>认证</span></div>
+    <div class="edu-cert-grid reveal">
+      <div>
+        <div class="edu-card" style="margin-bottom:16px">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <div class="edu-school">中国人民大学</div>
+            <div class="edu-degree">财务管理 · 本科</div>
+            <div class="edu-year">2014 — 2018 · 北京</div>
+          </div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-icon">📚</div>
+          <div>
+            <div class="edu-school">北京大学汇丰商学院</div>
+            <div class="edu-degree">财务管理 · 在职MBA（在读）</div>
+            <div class="edu-year">2023 — 至今 · 深圳</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="cert-title">专业认证</div>
+        <div class="cert-cards">
+          <div class="cert-card gold-card">
+            <div class="cert-icon">🏆</div>
+            <div>
+              <div class="cert-name gold-text">CPA · 注册会计师</div>
+              <div class="cert-org">中国注册会计师协会 · 2020年通过</div>
+            </div>
+          </div>
+          <div class="cert-card blue-card">
+            <div class="cert-icon">🌐</div>
+            <div>
+              <div class="cert-name blue-text">CMA · 美国管理会计师</div>
+              <div class="cert-org">IMA国际管理会计师协会 · 2022年通过</div>
+            </div>
+          </div>
+          <div class="cert-card" style="border-color:#86efac;background:linear-gradient(135deg,#f0fdf4,#ecfdf5)">
+            <div class="cert-icon">📊</div>
+            <div>
+              <div class="cert-name" style="color:#166534">Power BI 认证分析师</div>
+              <div class="cert-org">Microsoft · 2023年认证</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT 06 -->
+<div class="section contact-section" id="contact">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center">06 · Contact</div>
+    <div class="section-title" style="text-align:center;margin-bottom:36px">联系<span>我</span></div>
+    <div class="contact-grid">
+      <div class="contact-card"><div class="contact-icon-w">📧</div><div class="contact-lbl">Email</div><div class="contact-v">liming@finance.com</div></div>
+      <div class="contact-card"><div class="contact-icon-w">💬</div><div class="contact-lbl">微信</div><div class="contact-v">li_ming_finance</div></div>
+      <div class="contact-card"><div class="contact-icon-w">💼</div><div class="contact-lbl">领英</div><div class="contact-v">linkedin.com/in/liming</div></div>
+      <div class="contact-card"><div class="contact-icon-w">📍</div><div class="contact-lbl">城市</div><div class="contact-v">北京 · 可出差</div></div>
+    </div>
+    <div class="contact-cta">
+      <p>期待与您探讨合适的财务管理机会</p>
+      <a href="mailto:liming@finance.com" class="btn-contact">📧 发送邮件</a>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 李明 · Senior Financial Analyst · 由职灵AI定制</footer>
+
+<script>
+// SKILL TABS
+function showSkills(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['finance','data','manage'].forEach(c => {
+    const el = document.getElementById('skills-' + c);
+    el.classList.toggle('show', c === cat);
+  });
+}
+
+// SCROLL REVEAL
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+</script>
+</body>
+</html>

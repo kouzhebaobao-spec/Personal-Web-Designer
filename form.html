@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人主页定制 · 客户信息表</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px;
+    text-align: center;
+    color: white;
+  }
+  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  .form-body { padding: 40px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #667eea;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  .section-title:first-child { margin-top: 0; }
+  .form-group { margin-bottom: 18px; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+  }
+  label span.required { color: #e53e3e; margin-left: 2px; }
+  label span.hint {
+    font-weight: 400;
+    color: #999;
+    font-size: 12px;
+    margin-left: 6px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    background: #fafafa;
+    font-family: inherit;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
+    background: #fff;
+  }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+  .row { display: flex; gap: 14px; }
+  .row .form-group { flex: 1; }
+  .style-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .style-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .style-card:hover { border-color: #667eea; background: #f5f3ff; }
+  .style-card input[type="radio"] { display: none; }
+  .style-card.selected { border-color: #667eea; background: #f5f3ff; }
+  .style-card .icon { font-size: 24px; margin-bottom: 6px; }
+  .style-card .name { font-size: 12px; font-weight: 600; color: #444; }
+  .style-card .desc { font-size: 11px; color: #999; margin-top: 2px; }
+  .color-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .color-option {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .color-option:hover, .color-option.selected {
+    border-color: #333;
+    transform: scale(1.1);
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: opacity 0.2s, transform 0.2s;
+    letter-spacing: 1px;
+  }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+  .tip-box {
+    background: #f0f4ff;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #555;
+    margin-top: 20px;
+    line-height: 1.7;
+  }
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .success-msg .icon { font-size: 60px; margin-bottom: 16px; }
+  .success-msg h2 { font-size: 22px; color: #333; margin-bottom: 10px; }
+  .success-msg p { color: #666; font-size: 14px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">✨ AI 驱动 · 专业定制</div>
+    <h1>个人求职主页定制</h1>
+    <p>填写以下信息，我们将为您打造一个专属的个人主页<br>帮助您在求职中脱颖而出</p>
+  </div>
+
+  <div class="form-body" id="formSection">
+    <form id="clientForm" onsubmit="handleSubmit(event)">
+
+      <!-- 基本信息 -->
+      <div class="section-title">📋 基本信息</div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>姓名 <span class="required">*</span></label>
+          <input type="text" name="name" placeholder="请输入您的姓名" required>
+        </div>
+        <div class="form-group">
+          <label>目标职位 <span class="required">*</span></label>
+          <input type="text" name="target_job" placeholder="例：产品经理" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>所在城市</label>
+          <input type="text" name="city" placeholder="例：上海">
+        </div>
+        <div class="form-group">
+          <label>联系邮箱</label>
+          <input type="email" name="email" placeholder="your@email.com">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>联系电话</label>
+          <input type="tel" name="phone" placeholder="138xxxxxxxx">
+        </div>
+        <div class="form-group">
+          <label>GitHub / 作品集链接 <span class="hint">可选</span></label>
+          <input type="url" name="portfolio" placeholder="https://...">
+        </div>
+      </div>
+
+      <!-- 个人简介 -->
+      <div class="section-title">👤 个人介绍</div>
+
+      <div class="form-group">
+        <label>一句话介绍自己 <span class="required">*</span><span class="hint">会显示在主页最醒目位置</span></label>
+        <input type="text" name="tagline" placeholder="例：3年经验的全栈开发者，热爱用技术解决实际问题" required>
+      </div>
+
+      <div class="form-group">
+        <label>个人简介 <span class="required">*</span><span class="hint">100-200字，介绍你的背景和优势</span></label>
+        <textarea name="bio" placeholder="请介绍您的工作背景、核心优势、职业目标等..." required></textarea>
+      </div>
+
+      <!-- 教育与经历 -->
+      <div class="section-title">🎓 教育与工作经历</div>
+
+      <div class="form-group">
+        <label>最高学历 <span class="required">*</span></label>
+        <input type="text" name="education" placeholder="例：北京大学 · 计算机科学与技术 · 本科 · 2018-2022" required>
+      </div>
+
+      <div class="form-group">
+        <label>工作经历 <span class="required">*</span><span class="hint">按时间倒序，每段经历用回车分隔</span></label>
+        <textarea name="experience" rows="4" placeholder="例：&#10;字节跳动 · 产品经理 · 2022-至今&#10;负责xxx产品线，实现了xxx，带来xxx增长&#10;&#10;腾讯 · 产品实习生 · 2021&#10;参与xxx项目..." required></textarea>
+      </div>
+
+      <!-- 技能 -->
+      <div class="section-title">⚡ 核心技能</div>
+
+      <div class="form-group">
+        <label>技能标签 <span class="required">*</span><span class="hint">用逗号分隔，最多8个</span></label>
+        <input type="text" name="skills" placeholder="例：Python, 数据分析, 产品规划, Figma, SQL" required>
+      </div>
+
+      <div class="form-group">
+        <label>代表性项目/成就 <span class="hint">可选但强烈推荐</span></label>
+        <textarea name="projects" placeholder="例：&#10;项目名称：XX平台重构&#10;描述：负责从0到1搭建，上线后日活提升40%..."></textarea>
+      </div>
+
+      <!-- 风格偏好 -->
+      <div class="section-title">🎨 风格偏好</div>
+
+      <div class="form-group">
+        <label>主页风格 <span class="required">*</span></label>
+        <div class="style-grid">
+          <label class="style-card" onclick="selectStyle(this)">
+            <input type="radio" name="style" value="modern" required>
+            <div class="icon">🚀</div>
+            <div class="name">现代简约</div>
+            <div class="desc">清晰专业</div>
+          </label>
+          <label class="style-card" onclick="selectStyle(this)">
+            <input type="radio" name="style" value="creative">
+            <div class="icon">🎨</div>
+            <div class="name">创意活力</div>
+            <div class="desc">个性突出</div>
+          </label>
+          <label class="style-card" onclick="selectStyle(this)">
+            <input type="radio" name="style" value="tech">
+            <input type="radio" name="style" value="tech">
+            <div class="icon">💻</div>
+            <div class="name">科技感</div>
+            <div class="desc">深色炫酷</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>主色调</label>
+        <div class="color-grid">
+          <div class="color-option selected" style="background:#667eea" data-color="#667eea" onclick="selectColor(this)" title="紫蓝"></div>
+          <div class="color-option" style="background:#38b2ac" data-color="#38b2ac" onclick="selectColor(this)" title="青绿"></div>
+          <div class="color-option" style="background:#ed8936" data-color="#ed8936" onclick="selectColor(this)" title="橙色"></div>
+          <div class="color-option" style="background:#e53e3e" data-color="#e53e3e" onclick="selectColor(this)" title="红色"></div>
+          <div class="color-option" style="background:#2d3748" data-color="#2d3748" onclick="selectColor(this)" title="深灰"></div>
+          <div class="color-option" style="background:#48bb78" data-color="#48bb78" onclick="selectColor(this)" title="绿色"></div>
+        </div>
+        <input type="hidden" name="color" value="#667eea" id="colorInput">
+      </div>
+
+      <div class="form-group">
+        <label>补充说明 <span class="hint">可选，有什么特别想法都可以写</span></label>
+        <textarea name="notes" placeholder="例如：希望加入个人照片、希望有动画效果、参考某某人的主页风格..."></textarea>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>温馨提示：</strong>填写越详细，生成的主页越贴合您的需求。提交后我们将在 <strong>24小时内</strong> 发送初稿到您的邮箱，可免费修改2次。
+      </div>
+
+      <button type="submit" class="submit-btn">🚀 提交信息，开始定制</button>
+    </form>
+  </div>
+
+  <!-- 成功提示 -->
+  <div class="success-msg" id="successMsg">
+    <div class="icon">🎉</div>
+    <h2>提交成功！</h2>
+    <p>感谢您的信任，我们已收到您的信息<br>将在 <strong>24小时内</strong> 将主页初稿发送到您的邮箱<br><br>如有问题请联系客服</p>
+  </div>
+</div>
+
+<script>
+  function selectStyle(el) {
+    document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function selectColor(el) {
+    document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('colorInput').value = el.dataset.color;
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    // 实际部署时可在这里加 fetch() 将数据发送到后端或表单服务
+    const data = new FormData(e.target);
+    console.log('客户提交数据:', Object.fromEntries(data));
+  }
+</script>
+</body>
+</html>
